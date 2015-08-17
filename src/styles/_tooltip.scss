@@ -1,0 +1,66 @@
+
+.mc-tooltip {
+  @include shadowed;
+
+  position: absolute;
+  z-index: 10000;
+  display: block;
+  background-color: transparentize(#000,.2);
+  color: #fff;
+  min-width: 100px;
+  max-width: 400px;
+  opacity: 0;
+  border-radius: 0;
+  height: auto;
+
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+
+
+  //TODO: consider adding a class to not show triangle
+  //TODO: figure out how to make triangle on left/right
+  &.mc-tooltip-gravity-n:before {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    margin-left: -10px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparentize(#000,.2);
+  }
+
+  &.mc-tooltip-gravity-s:after {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparentize(#000,.2);
+  }
+
+
+
+  .mc-tooltip-key {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .mc-tooltip-x {
+    display: inline-block;
+    padding: 5px;
+    font-weight: bold;
+  }
+  .mc-tooltip-y {
+    display: inline-block;
+    padding: 5px;
+    font-weight: bold;
+  }
+}

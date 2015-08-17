@@ -1,0 +1,183 @@
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mCharts - Scatter</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-green.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
+
+    <!-- build:css-bundle -->
+    <link rel="stylesheet" href="/.tmp/mcharts.css">
+    <!-- endbuild -->
+
+    <style>
+
+      body {
+        font-family: 'Roboto','Helvetica','Arial',sans-serif !important;
+      }
+
+      .top-navigation .mdl-navigation__link {
+        opacity: .66;
+        border-bottom-width: 0;
+        border-bottom-style: solid;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      .top-navigation .mdl-navigation__link:hover {
+        opacity: 1 !important;
+      }
+
+      .examples .top-navigation .examples,
+      .docs .top-navigation .docs {
+        opacity: 1;
+        border-bottom-width: 4px;
+        border-bottom-color: #18FFFF;
+      }
+
+
+      .chartWrap {
+        position: relative;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: 600px;
+        height: 300px;
+        clear: right;
+        margin: 10px;
+      }
+      .example {
+        width: 600px;
+        height: 300px;
+      }
+
+      #update {
+        float: right;
+        margin: 10px;
+      }
+
+    </style>
+
+  </head>
+  <body class="examples">
+
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">mCharts.js</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only top-navigation">
+            <a class="mdl-navigation__link examples" href="/">Examples</a>
+            <a class="mdl-navigation__link docs" href="/">Docs</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">mCharts.js</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link examples" href="/">Examples</a>
+          <a class="mdl-navigation__link docs" href="/">Docs</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+
+
+
+          <button id="update" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">refresh</i>
+          </button>
+
+          <div class="chartWrap mdl-shadow--3dp">
+            <svg id="example" class="example"></svg>
+          </div>
+
+
+
+        </div>
+      </main>
+    </div>
+
+
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
+    <!-- build:js-app js -->
+    <script src="/node_modules/d3/d3.min.js"></script>
+    <script src="/.tmp/mcharts.js"></script>
+    <!-- endbuild -->
+
+
+    <script>
+
+    function getData(groups, points) {
+      var data = [],
+          //shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+          random = d3.random.normal(),
+          randomX = Math.random(),
+          randomY = Math.random();
+
+      for (i = 0; i < groups; i++) {
+        data.push({
+          key: 'Group ' + i,
+          values: []
+        });
+
+        for (j = 0; j < points; j++) {
+          data[i].values.push({
+            x: random() * randomX
+          , y: random() * randomY
+          , size: Math.random()
+          //, shape: shapes[j % 6]
+          });
+        }
+      }
+
+      return data;
+    }
+
+    mc.render(function() {
+      var chart = mc.models.voronoi(),
+          chartWrap = d3.select('#example');
+
+      chart
+        .margin({top: 20, right: 20, bottom: 30, left: 50})
+        .clipTiles(false)
+        .renderLegend(true)
+        //.useColor(true)
+        //.color(function(d,i,j) { return typeof j === 'undefined' ? i : j; })
+
+      var update = function() {
+        // Due to data being generated on the fly, render time in example may be higher than real render time
+        chartWrap
+            .datum(getData(Math.round(Math.random()) + 3, Math.round(Math.random() * 20) + 20))
+          //.transition().duration(2000)
+            .call(chart)
+      }
+
+      update();
+
+      // For Testing in console
+      window.chartWrap = chartWrap
+      window.chart = chart;
+      window.update = update;
+
+      d3.select('#update').on('click', update);
+
+      return chart;
+    });
+
+
+    </script>
+
+  </body>
+</html>

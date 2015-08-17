@@ -1,0 +1,76 @@
+
+//TODO: figure out why transitions don't work in firefox
+.mc-scatter {
+
+  .mc-groups {
+    &.mc-groupHover {
+      .mc-group {
+
+        &.mc-hover {
+          .mc-point {
+            stroke-width: 20px;
+            opacity: 1; //TODO: appears to not be getting picked up
+          }
+        }
+
+        .mc-point {
+          stroke-width: 0;
+          opacity: .4; //TODO: appears to not be getting picked up
+        }
+      }
+
+    }
+  }
+
+  .mc-group {
+    @include animated($name: 'svgFillFadeIn', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+    fill-opacity: .75;
+    //stroke-opacity: 1;
+
+    &.mc-group-exit {
+      @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+      .mc-point {
+        @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+      }
+    }
+
+    /*
+    &.mc-hover {
+      .mc-point {
+        stroke-width: 20px;
+        fill-opacity: 1; //TODO: appears to not be getting picked up
+      }
+    }
+    */
+
+    .mc-point {
+      @include animated($name: 'svgFillFadeIn', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+      transition: stroke-width 250ms linear,
+                  fill-opacity 250ms linear;
+      stroke-width: 0;
+      stroke-opacity: .25;
+
+      //&:hover,
+      &.mc-hover {
+        stroke-width: 20px;
+        fill-opacity: 1; //TODO: appears to not be getting picked up
+      }
+
+      &.mc-point-exit {
+        @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+      }
+    }
+  }
+
+  .mc-voronoi {
+    .mc-tile {
+      fill-opacity: 0 !important;
+      stroke-opacity: 0 !important;
+      //cursor: pointer;
+    }
+  }
+
+}

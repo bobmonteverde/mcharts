@@ -1,0 +1,265 @@
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mCharts - Line</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-green.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
+
+    <!-- build:css-bundle -->
+    <link rel="stylesheet" href="/.tmp/mcharts.css">
+    <!-- endbuild -->
+
+
+    <style>
+
+      body {
+        font-family: 'Roboto','Helvetica','Arial',sans-serif !important;
+      }
+
+      .top-navigation .mdl-navigation__link {
+        opacity: .66;
+        border-bottom-width: 0;
+        border-bottom-style: solid;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      .top-navigation .mdl-navigation__link:hover {
+        opacity: 1 !important;
+      }
+
+      .examples .top-navigation .examples,
+      .docs .top-navigation .docs {
+        opacity: 1;
+        border-bottom-width: 4px;
+        border-bottom-color: #18FFFF;
+      }
+
+
+      .chartWrap {
+        position: relative;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: 600px;
+        height: 300px;
+        margin: 10px;
+        clear: right;
+      }
+      .example {
+        width: 600px;
+        height: 300px;
+      }
+
+      #update {
+        float: right;
+        margin: 10px;
+      }
+
+    </style>
+
+  </head>
+
+  <body class="examples">
+
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">mCharts.js</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only top-navigation">
+            <a class="mdl-navigation__link examples" href="/">Examples</a>
+            <a class="mdl-navigation__link docs" href="/">Docs</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">mCharts.js</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link examples" href="/">Examples</a>
+          <a class="mdl-navigation__link docs" href="/">Docs</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+
+
+
+          <button id="update" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">refresh</i>
+          </button>
+
+          <div class="chartWrap mdl-shadow--3dp">
+            <svg id="example1" class="example"></svg>
+          </div>
+          <div class="chartWrap mdl-shadow--3dp">
+            <svg id="example2" class="example"></svg>
+          </div>
+          <div class="chartWrap mdl-shadow--3dp">
+            <svg id="example3" class="example"></svg>
+          </div>
+
+
+
+        </div>
+      </main>
+    </div>
+
+
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
+    <!-- build:js-app js -->
+    <script src="/node_modules/d3/d3.min.js"></script>
+    <script src="/.tmp/mcharts.js"></script>
+    <!-- endbuild -->
+
+
+    <script>
+
+var now = new Date();
+
+function sinData() {
+  var data = [];
+
+  now = new Date(now.getTime() + 500);
+
+  for (var i = 0; i < 75; i++) {
+    data.push({
+      x: new Date(now.getTime() + i * 500),
+      y: Math.sin((now.getTime() + i * 500)/5000)
+    });
+  }
+
+  return [{values: data, key: 'Sine' }];
+}
+
+
+function data() {
+  return stream_layers(3,100,.1).map(function(data, i) {
+  //return stream_layers(3,10+Math.random()*200,.1).map(function(data, i) {
+    return {
+      key: 'Stream' + i,
+      values: data
+    };
+  });
+}
+
+/* Inspired by Lee Byron's test data generator. */
+function stream_layers(n, m, o) {
+  if (arguments.length < 3) o = 0;
+  function bump(a) {
+    var x = 1 / (.1 + Math.random()),
+        y = 2 * Math.random() - .5,
+        z = 10 / (.1 + Math.random());
+    for (var i = 0; i < m; i++) {
+      var w = (i / m - y) * z;
+      a[i] += x * Math.exp(-w * w);
+    }
+  }
+  return d3.range(n).map(function() {
+      var a = [], i;
+      for (i = 0; i < m; i++) a[i] = o + o * Math.random();
+      for (i = 0; i < 5; i++) bump(a);
+      return a.map(stream_index);
+    });
+}
+
+/* Another layer generator using gamma distributions. */
+function stream_waves(n, m) {
+  return d3.range(n).map(function(i) {
+    return d3.range(m).map(function(j) {
+        var x = 20 * j / m - i / 3;
+        return 2 * x * Math.exp(-.5 * x);
+      }).map(stream_index);
+    });
+}
+
+function stream_index(d, i) {
+  return {x: i, y: Math.max(0, d)};
+}
+
+
+    mc.render(function() {
+      var chart = mc.models.line(),
+          chartWrap1 = d3.select('#example1'),
+          chartWrap2 = d3.select('#example2');
+
+      chart
+        .renderAxes(true)
+        .renderLegend(true)
+        .rebind()
+        .margin({top: 30, right: 60, bottom: 30, left: 50})
+        //.yForce([12])
+        //.xDomain([-4,4])
+
+
+      var update = function() {
+        // Due to data being generated on the fly, render time in example may be higher than real render time
+        chartWrap1
+            .datum(data())
+          .transition().duration(2000)
+            .call(chart);
+
+        chartWrap2
+            .datum(data())
+          .transition().duration(2000)
+            .call(chart);
+
+      }
+
+      update();
+
+      d3.select('#update').on('click', update);
+
+      return chart;
+    });
+
+
+    mc.render(function() {
+      var chart = mc.models.line(),
+          chartWrap3 = d3.select('#example3');
+
+      chart
+        .renderAxes(true)
+        .renderLegend(true)
+        .rebind()
+        .margin({top: 30, right: 60, bottom: 30, left: 50})
+        //.values(function(d){ return d })
+        .xScale(d3.time.scale())
+        .yDomain([-1,1])
+        //.yForce([12])
+        //.xDomain([-4,4])
+
+
+      var update = function(d) {
+        // Due to data being generated on the fly, render time in example may be higher than real render time
+        chartWrap3
+            .datum(d)
+          .transition().duration(500)
+            .call(chart);
+      }
+
+      update(sinData());
+
+      setInterval(function() {
+          update(sinData());
+      }, 500);
+
+      return chart;
+    })
+
+    </script>
+
+  </body>
+</html>

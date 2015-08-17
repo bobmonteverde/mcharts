@@ -1,0 +1,33 @@
+
+.mc-legend {
+
+  .mc-background rect {
+    fill: #fff;
+    fill-opacity: .75;
+
+    stroke: #777;
+    stroke-width: 1px;
+  }
+
+  .mc-legendElement {
+    cursor: pointer;
+
+    &.mc-disabled {
+      opacity: .6;
+
+      path {
+        fill: none;
+      }
+    }
+
+    text {
+      stroke: none;
+      fill: #000;
+    }
+
+    path {
+      stroke-width: 2px;
+    }
+  }
+
+}

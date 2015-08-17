@@ -1,0 +1,38 @@
+
+//TODO: figure out why transitions don't work in firefox
+.mc-bar {
+
+  .mc-group {
+    @include animated($name: 'svgFillFadeIn', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+    fill-opacity: 1;
+    //stroke-opacity: 1;
+
+    &.mc-group-exit {
+      @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+      .mc-bar {
+        @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+      }
+    }
+
+    .mc-bar {
+      @include animated($name: 'svgFillFadeIn', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+
+      transition: stroke-width 250ms linear,
+                  fill-opacity 250ms linear;
+      stroke-width: 0;
+      stroke-opacity: .25;
+
+      &:hover, &.mc-hover {
+        stroke-width: 20px;
+        fill-opacity: 1; //TODO: appears to not be getting picked up **could be due to svgFillFadeIn
+      }
+
+      &.mc-bar-exit {
+        @include animated($name: 'svgFillFadeOut', $duration: $animationDuration, $timing: linear, $fill-mode: both);
+      }
+    }
+  }
+
+}

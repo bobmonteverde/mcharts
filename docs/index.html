@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mCharts</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-teal.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
+
+
+    <!-- build:css-bundle -->
+    <link rel="stylesheet" href="/.tmp/mcharts.css">
+    <!-- endbuild -->
+
+    <style>
+
+      body {
+        font-family: 'Roboto','Helvetica','Arial',sans-serif !important;
+      }
+
+      .demo-card-wide.mdl-card {
+        margin: 40px auto;
+        width: 512px;
+      }
+
+      .demo-card-wide > .mdl-card__title {
+        color: #fff;
+        height: 120px;
+        background-color: rgb(33, 150, 243);
+      }
+
+      .top-navigation .mdl-navigation__link {
+        opacity: .66;
+        border-bottom-width: 0;
+        border-bottom-style: solid;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      .top-navigation .mdl-navigation__link:hover {
+        opacity: 1 !important;
+      }
+
+      .examples .top-navigation .examples,
+      .docs .top-navigation .docs {
+        opacity: 1;
+        border-bottom-width: 4px;
+        border-bottom-color: #18FFFF;
+      }
+
+    </style>
+
+  </head>
+  <body class="examples">
+    <!--[if lt IE 10]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">mCharts.js</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only top-navigation">
+            <a class="mdl-navigation__link examples" href="/">Examples</a>
+            <a class="mdl-navigation__link docs" href="/">Docs</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">mCharts.js</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link examples" href="/">Examples</a>
+          <a class="mdl-navigation__link docs" href="/">Docs</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+
+
+
+          <div class="mdl-card mdl-shadow--2dp demo-card-wide demo-card-green">
+            <div class="mdl-card__title mdl-card--primary">
+              <h2 class="mdl-card__title-text">Examples</h2>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/scatter.html">
+                Scatter
+              </a>
+              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/line.html">
+                Line
+              </a>
+              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/bar.html">
+                Bar
+              </a>
+              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/voronoi.html">
+                Voronoi
+              </a>
+            </div>
+          </div>
+
+
+
+        </div>
+      </main>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+/*
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X');ga('send','pageview');
+*/
+    </script>
+
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
+    <!-- build:js-app -->
+    <script src="/node_modules/d3/d3.min.js"></script>
+    <script src="/.tmp/mcharts.js"></script>
+    <!-- endbuild -->
+
+  </body>
+</html>

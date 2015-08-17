@@ -1,0 +1,24 @@
+
+.mc-chartBase {
+  .axis path {
+    //display: none;
+    //fill: none;
+  }
+
+  .axis line {
+    shape-rendering: crispEdges;
+    stroke: #999;
+  }
+
+  .axis .minor line {
+    stroke: #777;
+    stroke-dasharray: 2,2;
+  }
+
+}
+
+//TODO: if keeping this way of disabling, transition opacity to 0
+.mc-disabled {
+  transition: opacity 250ms linear;
+  opacity: 0;
+}

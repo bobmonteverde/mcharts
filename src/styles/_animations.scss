@@ -1,0 +1,40 @@
+
+@keyframes svgFadeIn {
+  0% {
+    fill-opacity:   0;
+    stroke-opacity: 0;
+  }
+  100% {
+    fill-opacity:   $fillOpacity;
+    stroke-opacity: $strokeOpacity;
+  }
+}
+
+@keyframes svgFadeOut {
+  0% {
+    fill-opacity:   $fillOpacity;
+    stroke-opacity: $strokeOpacity;
+  }
+  100% {
+    fill-opacity:   0;
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes svgFillFadeIn {
+  0% {
+    fill-opacity: 0;
+  }
+  100% {
+    fill-opacity: $fillOpacity;
+  }
+}
+
+@keyframes svgFillFadeOut {
+  0% {
+    fill-opacity: $fillOpacity;
+  }
+  100% {
+    fill-opacity: 0;
+  }
+}
