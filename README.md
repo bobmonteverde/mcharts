@@ -1,6 +1,6 @@
-# mCharts
+# <a href="http://bobmonteverde.github.io/mcharts/">mCharts</a>
 
-A collection of reusable charts and chart components in d3.js
+A collection of highly customizeable data visualizations for the web, on top of d3.js
 
 ## In heavy development.  Until version 1.0.0 API may change at any time.
 
