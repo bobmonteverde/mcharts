@@ -212,6 +212,58 @@ html, body {
   z-index: 99;
 }
 
+
+.mdl-layout__tab-link {
+  margin: 0;
+  border: none;
+  padding: 0 24px;
+  float: left;
+  position: relative;
+  display: block;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  overflow: hidden;
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab-link {
+  height: 64px;
+  line-height: 64px;
+}
+.mdl-demo .mdl-layout__tab-link.is-active {
+  color: rgb(255,255,255);
+}
+.mdl-layout .mdl-layout__tab-link.is-active::after {
+  height:2px;
+  width:100%;
+  display:block;
+  content:" ";
+  bottom:0;
+  left:0;
+  position:absolute;
+  background:rgb(100,255,218);
+  -webkit-animation:border-expand .2s cubic-bezier(.4,0,.4,1).01s alternate forwards;
+  animation:border-expand .2s cubic-bezier(.4,0,.4,1).01s alternate forwards;
+  -webkit-transition:all 1s cubic-bezier(.4,0,1,1);
+  transition:all 1s cubic-bezier(.4,0,1,1);
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab-link.is-active::after {
+  background-color: white;
+  height: 4px;
+}
+
+
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
@@ -231,3 +283,4 @@ html, body {
 .section__circle-container__circle .material-icons.md-48 {
   margin: 25px;
 }
+
