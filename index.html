@@ -1,151 +1,289 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>mCharts</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A collection of highly customizeable data visualizations for the web.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mCharts - data visualizations for the web</title>
 
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--<link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">-->
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <!--<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">-->
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <!--<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">-->
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-teal.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="mcharts.min.css">
-
-    <style>
-
-      body {
-        font-family: 'Roboto','Helvetica','Arial',sans-serif !important;
-      }
-
-      .demo-card-wide.mdl-card {
-        margin: 40px auto;
-        width: 512px;
-      }
-
-      .demo-card-wide > .mdl-card__title {
-        color: #fff;
-        height: 120px;
-        background-color: rgb(33, 150, 243);
-      }
-
-      .top-navigation .mdl-navigation__link {
-        opacity: .66;
-        border-bottom-width: 0;
-        border-bottom-style: solid;
-        font-weight: 500;
-        text-transform: uppercase;
-      }
-
-      .top-navigation .mdl-navigation__link:hover {
-        opacity: 1 !important;
-      }
-
-      .examples .top-navigation .examples,
-      .docs .top-navigation .docs {
-        opacity: 1;
-        border-bottom-width: 4px;
-        border-bottom-color: #18FFFF;
-      }
-
-
-      .header-top-logo {
-        width: 50px;
-        height: 50px;
-        margin-right: 30px;
-      }
-
-      .header-side-logo {
-        display: block;
-        margin: 8px auto;
-        width: 64px;
-        height: 64px;
-      }
-
-    </style>
-
+    <link rel="stylesheet" href="styles/styles.css">
   </head>
-  <body class="examples">
-    <!--[if lt IE 10]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-          <!-- Title -->
-          <img src="images/mcharts-logo-white-64x64.svg" class="header-top-logo" />
-          <span class="mdl-layout-title">mCharts.js</span>
-          <!-- Add spacer, to align navigation to the right -->
-          <div class="mdl-layout-spacer"></div>
-          <!-- Navigation. We hide it in small screens. -->
-          <nav class="mdl-navigation mdl-layout--large-screen-only top-navigation">
-            <a class="mdl-navigation__link examples" href="#">Examples</a>
-            <a class="mdl-navigation__link docs" href="#">Docs</a>
-          </nav>
+
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          <a href="http://bobmonteverde.github.io/mcharts"><img src="../images/mcharts-logo-white-64x64.svg" class="header-logo" /></a>
+          <h3>mCharts.js</h3>
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <a href="#overview" class="mdl-layout__tab is-active">Overview</a>
+          <a href="#examples" class="mdl-layout__tab">Examples</a>
+          <a href="#docs" class="mdl-layout__tab">Documentation</a>
+          <!--<a href="https://github.com/bobmonteverde/mcharts" class="mdl-layout__tab">Source</a>-->
+          <a href="https://github.com/bobmonteverde/mcharts" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="download">
+            <i class="material-icons">get_app</i>
+          </a>
         </div>
       </header>
-      <div class="mdl-layout__drawer">
-        <img src="images/mcharts-logo-64x64.svg" class="header-side-logo" />
-        <span class="mdl-layout-title">mCharts.js</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link examples" href="#">Examples</a>
-          <a class="mdl-navigation__link docs" href="#">Docs</a>
-        </nav>
-      </div>
+
+
       <main class="mdl-layout__content">
-        <div class="page-content">
 
 
+        <div class="mdl-layout__tab-panel is-active" id="overview">
 
-          <div class="mdl-card mdl-shadow--2dp demo-card-wide demo-card-green">
-            <div class="mdl-card__title mdl-card--primary">
-              <h2 class="mdl-card__title-text">Examples</h2>
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
+              <img src="images/mcharts-logo-white-64x64.svg" class="overview-logo" />
+            </header>
+            <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+              <div class="mdl-card__supporting-text">
+                <h4>Overview</h4>
+                A collection of highly customizeable charts and components for the web. Programmed on top of d3.js and can be used directly or within your own more advanced data visualizations.
+              </div>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/scatter.html">
-                Scatter
-              </a>
-              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/line.html">
-                Line
-              </a>
-              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/bar.html">
-                Bar
-              </a>
-              <a class="mdl-button mdl-button--accent mdl-button--raised" href="examples/voronoi.html">
-                Voronoi
-              </a>
+          </section>
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp overview-details">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--red">
+                    <i class="material-icons md-36 md-light">warning</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h4>Under Development</h4>
+                  In the early stages of development. Major design and API changes will be common. NO NOT USE IN PRODUCTION.
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp overview-details">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">settings_applications</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Highly Customizeable</h5>
+                  All of the charts can be customized easily to match any of your needs, whatever they may be. From color and animation, to custom user interactions.
+                </div>
+
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">dashboard</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Flexible Data Structures</h5>
+                  By allowing the user to describe how to extract data from the supplied data structure, the charts can handle pretty much any data you throw at them.  There is no standard data structure you need to force your data into, use your data AS IS, without modification.
+                </div>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">extension</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Easy to Expand</h5>
+                  It's very easy to build new mChart visualizations. You can use any premade chart or component and combine them to make more complex visualizations.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section--footer mdl-color--white mdl-grid">
+            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+              <div class="section__circle-container__circle mdl-color--accent section__circle--big">
+                <i class="material-icons md-48 md-light">code</i>
+              </div>
+            </div>
+            <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+              <h5>ECMAScript 6</h5>
+              Utilizes <a href="https://babeljs.io/">Babel</a> to compile next generations ECMAScript 6 source code to ECMAScript5 code, safe to use in all modern browsers.
+            </div>
+            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+              <div class="section__circle-container__circle mdl-color--accent section__circle--big">
+                <i class="material-icons md-48 md-light">color_lens</i>
+              </div>
+            </div>
+            <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+              <h5>SASS</h5>
+              Utilizes <a href="http://sass-lang.com/">SASS</a> to write clearer more concise feature rich CSS, with browser compatibility in mind.
+            </div>
+          </section>
+        </div>
 
 
+
+        <div class="mdl-layout__tab-panel" id="examples">
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                <h4 class="mdl-cell mdl-cell--12-col">Examples</h4>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">insert_chart</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Scatter Plot</h5>
+                  <a href="examples/scatter.html">Click here</a> to view an example of the scatter plot.
+                </div>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">insert_photo</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Line chart</h5>
+                  <a href="examples/line.html">Click here</a> to view examples of the line chart, including an example imitating live data updates.
+                </div>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">insert_chart</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Bar Charts</h5>
+                  <a href="examples/bar.html">Click here</a> to view an example bar, grouped bar, and stacked bar charts. Also so how you can easily transition between different states.
+                </div>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class="section__circle-container__circle mdl-color--primary">
+                    <i class="material-icons md-36 md-light">insert_chart</i>
+                  </div>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Voronoi Diagram</h5>
+                  <a href="examples/voronoi.html">Click here</a> to view an example voronoi diagram. The voronoi is also used under the hood with the scatter chart and others to provide fluid user interaction between points.
+                </div>
+              </div>
+              <div class="mdl-card__actions">
+                <a href="https://github.com/bobmonteverde/mcharts" class="mdl-button">View more examples by getting the code</a>
+              </div>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn2">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn2">
+              <li class="mdl-menu__item">Lorem</li>
+              <li class="mdl-menu__item" disabled>Ipsum</li>
+              <li class="mdl-menu__item">Dolor</li>
+            </ul>
+          </section>
 
         </div>
+
+
+
+        <div class="mdl-layout__tab-panel" id="docs">
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Documentation - Coming soon</h4>
+              Library is still in very early development, not ready for production.
+
+              <ul class="toc">
+                <h4>Contents</h4>
+                <a href="#lorem1">Lorem ipsum</a>
+                <a href="#lorem2">Lorem ipsum</a>
+                <a href="#lorem3">Lorem ipsum</a>
+                <a href="#lorem4">Lorem ipsum</a>
+                <a href="#lorem5">Lorem ipsum</a>
+              </ul>
+
+              <h5 id="lorem1">Lorem ipsum dolor sit amet</h5>
+              Excepteur et pariatur officia veniam anim culpa cupidatat consequat ad velit culpa est non.
+              <ul>
+                <li>Nisi qui nisi duis commodo duis reprehenderit consequat velit aliquip.</li>
+                <li>Dolor consectetur incididunt in ipsum laborum non et irure pariatur excepteur anim occaecat officia sint.</li>
+                <li>Lorem labore proident officia excepteur do.</li>
+              </ul>
+
+              <p>
+                Sit qui est voluptate proident minim cillum in aliquip cupidatat labore pariatur id tempor id. Proident occaecat occaecat sint mollit tempor duis dolor cillum anim. Dolore sunt ea mollit fugiat in aliqua consequat nostrud aliqua ut irure in dolore. Proident aliqua culpa sint sint exercitation. Non proident occaecat reprehenderit veniam et proident dolor id culpa ea tempor do dolor. Nulla adipisicing qui fugiat id dolor. Nostrud magna voluptate irure veniam veniam labore ipsum deserunt adipisicing laboris amet eu irure. Sunt dolore nisi velit sit id. Nostrud voluptate labore proident cupidatat enim amet Lorem officia magna excepteur occaecat eu qui. Exercitation culpa deserunt non et tempor et non.
+              </p>
+              <p>
+                Do dolor eiusmod eu mollit dolore nostrud deserunt cillum irure esse sint irure fugiat exercitation. Magna sit voluptate id in tempor elit veniam enim cupidatat ea labore elit. Aliqua pariatur eu nulla labore magna dolore mollit occaecat sint commodo culpa. Eu non minim duis pariatur Lorem quis exercitation. Sunt qui ex incididunt sit anim incididunt sit elit ad officia id.
+              </p>
+              <p id="lorem2">
+                Tempor voluptate ex consequat fugiat aliqua. Do sit et reprehenderit culpa deserunt culpa. Excepteur quis minim mollit irure nulla excepteur enim quis in laborum. Aliqua elit voluptate ad deserunt nulla reprehenderit adipisicing sint. Est in eiusmod exercitation esse commodo. Ea reprehenderit exercitation veniam adipisicing minim nostrud. Veniam dolore ex ea occaecat non enim minim id ut aliqua adipisicing ad. Occaecat excepteur aliqua tempor cupidatat aute dolore deserunt ipsum qui incididunt aliqua occaecat sit quis. Culpa sint aliqua aliqua reprehenderit veniam irure fugiat ea ad.
+              </p>
+              <p>
+                Eu minim fugiat laborum irure veniam Lorem aliqua enim. Aliqua veniam incididunt consequat irure consequat tempor do nisi deserunt. Elit dolore ad quis consectetur sint laborum anim magna do nostrud amet. Ea nulla sit consequat quis qui irure dolor. Sint deserunt excepteur consectetur magna irure. Dolor tempor exercitation dolore pariatur incididunt ut laboris fugiat ipsum sunt veniam aute sunt labore. Non dolore sit nostrud eu ad excepteur cillum eu ex Lorem duis.
+              </p>
+              <p>
+                Id occaecat velit non ipsum occaecat aliqua quis ut. Eiusmod est magna non esse est ex incididunt aute ullamco. Cillum excepteur sint ipsum qui quis velit incididunt amet. Qui deserunt anim enim laborum cillum reprehenderit duis mollit amet ad officia enim. Minim sint et quis aliqua aliqua do minim officia dolor deserunt ipsum laboris. Nulla nisi voluptate consectetur est voluptate et amet. Occaecat ut quis adipisicing ad enim. Magna est magna sit duis proident veniam reprehenderit fugiat reprehenderit enim velit ex. Ullamco laboris culpa irure aliquip ad Lorem consequat veniam ad ipsum eu. Ipsum culpa dolore sunt officia laborum quis.
+              </p>
+
+              <h5 id="lorem3">Lorem ipsum dolor sit amet</h5>
+
+              <p id="lorem4">
+                Eiusmod nulla aliquip ipsum reprehenderit nostrud non excepteur mollit amet esse est est dolor. Dolore quis pariatur sit consectetur veniam esse ullamco duis Lorem qui enim ut veniam. Officia deserunt minim duis laborum dolor in velit pariatur commodo ullamco eu. Aute adipisicing ad duis labore laboris do mollit dolor cillum sunt aliqua ullamco. Esse tempor quis cillum consequat reprehenderit. Adipisicing proident anim eu sint elit aliqua anim dolore cupidatat fugiat aliquip qui.
+              </p>
+              <p id="lorem5">
+                Nisi eiusmod esse cupidatat excepteur exercitation ipsum reprehenderit nostrud deserunt aliqua ullamco. Anim est irure commodo eiusmod pariatur officia. Est dolor ipsum excepteur magna aliqua ad veniam irure qui occaecat eiusmod aute fugiat commodo. Quis mollit incididunt amet sit minim velit eu fugiat voluptate excepteur. Sit minim id pariatur ex cupidatat cupidatat nostrud nostrud ipsum.
+              </p>
+              <p>
+                Enim ea officia excepteur ad veniam id reprehenderit eiusmod esse mollit consequat. Esse non aute ullamco Lorem aliqua qui dolore irure eiusmod aute aliqua proident labore aliqua. Ipsum voluptate voluptate exercitation laborum deserunt nulla elit aliquip et minim ex veniam. Duis cupidatat aute sunt officia mollit dolor ad elit ad aute labore nostrud duis pariatur. In est sint voluptate consectetur velit ea non labore. Ut duis ea aliqua consequat nulla laboris fugiat aute id culpa proident. Minim eiusmod laboris enim Lorem nisi excepteur mollit voluptate enim labore reprehenderit officia mollit.
+              </p>
+              <p>
+                Cupidatat labore nisi ut sunt voluptate quis sunt qui ad Lorem esse nisi. Ex esse velit ullamco incididunt occaecat dolore veniam tempor minim adipisicing amet. Consequat in exercitation est elit anim consequat cillum sint labore cillum. Aliquip mollit laboris ad labore anim.
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+
+        <footer class="mdl-mega-footer">
+          <div class="mdl-mega-footer--bottom-section">
+            <div class="mdl-logo">
+              Library released under <a href="http://opensource.org/licenses/BSD-3-Clause">BSD license</a>. Copyright 2015 <a href="http://montev.com" rel="author">Bob Monteverde</a>.
+            </div>
+          </div>
+        </footer>
+
       </main>
     </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-/*
-        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-        e.src='//www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','UA-XXXXX-X');ga('send','pageview');
-*/
-    </script>
-
 
 
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
     <script src="mcharts.min.js"></script>
-
 
   </body>
 </html>

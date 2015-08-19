@@ -1,66 +1,43 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>mCharts - Bar</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A collection of highly customizeable data visualizations for the web.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mCharts - Examples - Bar</title>
 
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-green.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--<link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">-->
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <!--<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">-->
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <!--<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">-->
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-teal.min.css">
 
     <link rel="stylesheet" href="../mcharts.min.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 
     <style>
 
-      body {
-        font-family: 'Roboto','Helvetica','Arial',sans-serif !important;
-      }
-
-      .top-navigation .mdl-navigation__link {
-        opacity: .66;
-        border-bottom-width: 0;
-        border-bottom-style: solid;
-        font-weight: 500;
-        text-transform: uppercase;
-      }
-
-      .top-navigation .mdl-navigation__link:hover {
-        opacity: 1 !important;
-      }
-
-      .examples .top-navigation .examples,
-      .docs .top-navigation .docs {
-        opacity: 1;
-        border-bottom-width: 4px;
-        border-bottom-color: #18FFFF;
-      }
-
-      .header-top-logo {
-        width: 50px;
-        height: 50px;
-        margin-right: 30px;
-      }
-
-      .header-side-logo {
-        display: block;
-        margin: 8px auto;
-        width: 64px;
-        height: 64px;
-      }
-
-
       .chartWrap {
         position: relative;
-        float: left;
         margin: 0;
         padding: 0;
+        float: left;
         width: 400px;
         height: 200px;
         margin: 10px;
-        clear: right;
       }
       .example {
         width: 400px;
@@ -68,78 +45,98 @@
       }
 
       #update {
-        float: right;
-        margin: 10px;
+        position: absolute;
+        top: 8px;
+        right: 8px;
       }
 
     </style>
 
-
   </head>
-
-  <body class="examples">
-
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-          <!-- Title -->
-          <img src="../images/mcharts-logo-white-64x64.svg" class="header-top-logo" />
-          <span class="mdl-layout-title">mCharts.js</span>
-          <!-- Add spacer, to align navigation to the right -->
-          <div class="mdl-layout-spacer"></div>
-          <!-- Navigation. We hide it in small screens. -->
-          <nav class="mdl-navigation mdl-layout--large-screen-only top-navigation">
-            <a class="mdl-navigation__link examples" href="..">Examples</a>
-            <a class="mdl-navigation__link docs" href="..">Docs</a>
-          </nav>
+
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          <a href="http://bobmonteverde.github.io/mcharts"><img src="../images/mcharts-logo-white-64x64.svg" class="header-logo" /></a>
+          <h3>mCharts.js</h3>
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <a href="/#overview" class="mdl-layout__tab">Overview</a>
+          <a href="/#examples" class="mdl-layout__tab is-active">Examples</a>
+          <a href="/#docs" class="mdl-layout__tab">Documentation</a>
+          <!--<a href="https://github.com/bobmonteverde/mcharts" class="mdl-layout__tab">Source</a>-->
+          <a href="https://github.com/bobmonteverde/mcharts" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="download">
+            <i class="material-icons">get_app</i>
+          </a>
         </div>
       </header>
-      <div class="mdl-layout__drawer">
-        <img src="../images/mcharts-logo-64x64.svg" class="header-side-logo" />
-        <span class="mdl-layout-title">mCharts.js</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link examples" href="..">Examples</a>
-          <a class="mdl-navigation__link docs" href="..">Docs</a>
-        </nav>
-      </div>
+
+
       <main class="mdl-layout__content">
-        <div class="page-content">
+
+
+        <div class="mdl-layout__tab-panel is-active" id="examples">
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+
+
+                <!--<h4>Bar Charts</h4>-->
+
+                <button id="update" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                  <i class="material-icons">refresh</i>
+                </button>
+
+                <div class="chartWrap mdl-shadow--3dp">
+                  <svg id="example1" class="example example1"></svg>
+                </div>
+                <div class="chartWrap mdl-shadow--3dp">
+                  <svg id="example1b" class="example example1"></svg>
+                </div>
+                <div class="chartWrap mdl-shadow--3dp">
+                  <svg id="example2" class="example"></svg>
+                </div>
+                <div class="chartWrap mdl-shadow--3dp">
+                  <svg id="example3" class="example"></svg>
+                </div>
+                <div class="chartWrap mdl-shadow--3dp">
+                  <svg id="example4" class="example"></svg>
+                </div>
 
 
 
-          <button id="update" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">refresh</i>
-          </button>
-
-          <div class="chartWrap mdl-shadow--3dp">
-            <svg id="example1" class="example example1"></svg>
-          </div>
-          <div class="chartWrap mdl-shadow--3dp">
-            <svg id="example1b" class="example example1"></svg>
-          </div>
-          <div class="chartWrap mdl-shadow--3dp">
-            <svg id="example2" class="example"></svg>
-          </div>
-          <div class="chartWrap mdl-shadow--3dp">
-            <svg id="example3" class="example"></svg>
-          </div>
-          <div class="chartWrap mdl-shadow--3dp">
-            <svg id="example4" class="example"></svg>
-          </div>
-
+              </div>
+            </div>
+          </section>
 
 
         </div>
+
+
+        <footer class="mdl-mega-footer">
+          <div class="mdl-mega-footer--bottom-section">
+            <div class="mdl-logo">
+              Library released under <a href="http://opensource.org/licenses/BSD-3-Clause">BSD license</a>. Copyright 2015 <a href="http://montev.com" rel="author">Bob Monteverde</a>.
+            </div>
+          </div>
+        </footer>
+
       </main>
     </div>
-
 
 
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
     <script src="../mcharts.min.js"></script>
+
 
 
     <script>
