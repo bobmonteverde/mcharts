@@ -1,0 +1,12 @@
+# Site settings
+title: mCharts - data visualizations for the web
+email: bob@montev.com
+description: > # this means to ignore newlines until "baseurl:"
+  A collection of highly customizable data visualizations for the web.
+baseurl: "/mcharts/" # the subpath of your site, e.g. /blog/
+url: "http://bobmonteverde.github.io" # the base hostname & protocol for your site
+twitter_username: bobmonteverde
+github_username:  bobmonteverde
+
+# Build settings
+markdown: kramdown

@@ -1,0 +1,20 @@
+
+.chartWrap {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 600px;
+  height: 300px;
+  margin: 10px;
+}
+.example {
+  width: 600px;
+  height: 300px;
+}
+
+#update {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+

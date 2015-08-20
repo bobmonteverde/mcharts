@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+
+      {% include header.html %}
+
+
+      <main class="mdl-layout__content">
+
+
+        {{ content }}
+
+
+        {% include footer.html %}
+
+
+      </main>
+    </div>
+
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    <script src="{{ "/mcharts.min.js" | prepend: site.baseurl }}"></script>
+
+  </body>
+</html>

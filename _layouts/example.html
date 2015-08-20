@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+
+      {% include header.html active="example" %}
+
+
+      <main class="mdl-layout__content">
+
+        <div class="mdl-layout__tab-panel is-active" id="examples">
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+
+
+                <style>
+                  {% include_relative style.css %}
+                </style>
+
+
+                {{ content }}
+
+
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+
+        {% include footer.html %}
+
+
+      </main>
+    </div>
+
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    <script src="{{ "/mcharts.min.js" | prepend: site.baseurl }}"></script>
+
+    <script>
+        {% include_relative script.js %}
+    </script>
+
+  </body>
+</html>
