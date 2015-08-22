@@ -14,7 +14,7 @@ mc.models.line = function line(model) {
   model.name        = 'line'; // used for top level class, usually matches model name
 
   // Accessors
-  model.defined_    = function(d) { return !d.notDefined };
+  model.defined_    = d => !d.notDefined;
 
   // Setup Layers
   //TODO: consider making in chart.layers not model.layers
@@ -33,16 +33,16 @@ mc.models.line = function line(model) {
     events: {
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d,i) { return 'mc-group mc-group-' + i })
-          .classed('mc-disabled', function(d) { return d.disabled });
+          .attr('class', (d,i) => `mc-group mc-group-${i}`)
+          .classed('mc-disabled', d => d.disabled);
       },
       'exit': function(model, instance) {
         return this
-          .classed('mc-group-exit', true);
+          .classed('mc-group-exit', true)
       },
       //TODO: put remove here instead of in exit to allow other models to utilize an exit transition
       'exit:transition': function(model, instance) {
-        return this.remove();
+        return this.remove()
       }
     }
   });
@@ -55,7 +55,8 @@ mc.models.line = function line(model) {
     },
     insert: function() {
       return this.append('path')
-        .attr('class', function(d, i) { return 'mc-path'; });
+        //.attr('class', function(d, i) { return 'mc-path'; });
+        .attr('class', 'mc-path');
     },
     events: {
       'enter': function(model, instance) {
@@ -70,7 +71,7 @@ mc.models.line = function line(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d, i) { return 'mc-path mc-path-' + i });
+          .attr('class', (d, i) => `mc-path mc-path-${i}` );
       },
       'merge:transition': function(model, instance) {
         return this
@@ -111,7 +112,7 @@ mc.models.line = function line(model) {
 
 
     this.__chart__.chart    = chart;
-    this.__chart__.update   = function() { return instance.container.call(chart) };
+    this.__chart__.update   = () => instance.container.call(chart);
 
     return chart;
   };
