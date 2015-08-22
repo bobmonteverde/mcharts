@@ -35,6 +35,7 @@
     "gulp-concat": "2.6.x",
     "gulp-cssimport": "2.1.x",
     "gulp-csso": "1.0.x",
+    "gulp-eslint": "^1.0.0",
     "gulp-help": "1.6.x",
     "gulp-html-replace": "1.5.x",
     "gulp-if": "1.2.x",
