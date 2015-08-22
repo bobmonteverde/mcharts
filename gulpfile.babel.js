@@ -30,10 +30,18 @@ requireDir('./gulp/tasks', {
  *  main optimization build task
  */
 gulp.task('default', 'Build production files', ['prepare-default'], cb => {
-  runSequence(['core-scripts-dist', 'core-styles-dist'], cb);
+  runSequence([
+    'core-scripts-dist',
+    'core-styles-dist'
+  ], cb);
 });
 
 gulp.task('prepare-default', 'Do all the necessary preparatory work for the default task', ['clean'], cb => {
-  runSequence(['core-eslint', 'core-scripts', 'core-styles'], cb);
+  runSequence([
+    'core-eslint',
+    //'core-jsdoc',
+    'core-scripts',
+    'core-styles'
+  ], cb);
 });
 

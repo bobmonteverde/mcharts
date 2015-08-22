@@ -1,4 +1,3 @@
-
 'use strict';
 
 import gulp from 'gulp';
@@ -13,7 +12,7 @@ import utils from '../utils';
 help(gulp); // provide help through 'gulp help' -- the help text is the second gulp task argument (https://www.npmjs.com/package/gulp-help/)
 
 
-gulp.task('core-eslint', 'Lint core JS code with ESLint', () =>{
+gulp.task('core-eslint', 'Lint core JS code with ESLint', () => {
   return utils.plumbedSrc( // handle errors nicely (i.e., without breaking watch)
     config.javascript.src
   )

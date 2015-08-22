@@ -40,6 +40,7 @@
     "gulp-html-replace": "1.5.x",
     "gulp-if": "1.2.x",
     "gulp-imagemin": "2.3.x",
+    "gulp-jsdoc": "^0.1.4",
     "gulp-load-plugins": "0.9.x",
     "gulp-minify-css": "1.2.x",
     "gulp-minify-html": "1.0.x",
