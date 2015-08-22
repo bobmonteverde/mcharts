@@ -14,8 +14,8 @@ mc.models.voronoi = function voronoi(model) {
   model.clipTiles   = false;
 
   // Accessors
-  model.active_     = function(d) { return !d.notActive };
-  model.clipRadius_ = function() { return 25 };
+  model.active_     = d => !d.notActive;
+  model.clipRadius_ = () => 25;
 
   // Setup Component Settings
 
@@ -89,16 +89,8 @@ mc.models.voronoi = function voronoi(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d,i) {
-            return 'mc-tile mc-tile-' + i + ' mc-group-' + d.seriesIndex;
-          })
-          .attr('d', function(d) {
-            if (d.data.length === 0) {
-              //return 'M 0 0'  //TODO: make sure its 'M 0 0' not 'M 0,0'
-              return '';
-            } else
-              return 'M' + d.data.join('L') + 'Z';
-          });
+          .attr('class', (d,i) => `mc-tile mc-tile-${i} mc-group-${d.seriesIndex}`)
+          .attr('d', d => (d.data.length === 0) ? '' : `M${d.data.join('L')}Z`);
       },
       'exit': function(model, instance) {
         return this.remove();
@@ -192,11 +184,11 @@ mc.models.voronoi = function voronoi(model) {
     ]);
 
 
-    instance.voronoi = d3.geom.voronoi(instance.vertices).map(function(d, i) {
-      var seriesIndex =  instance.vertices[i][4],
+    instance.voronoi = d3.geom.voronoi(instance.vertices).map((d, i) => {
+      var seriesIndex = instance.vertices[i][4],
           pointIndex  = instance.vertices[i][3],
           series      = allGroups[seriesIndex],
-          point  = model.values_(series, seriesIndex)[pointIndex];
+          point       = model.values_(series, seriesIndex)[pointIndex];
 
       return {
         'data': instance.bounds.clip(d)
@@ -210,7 +202,7 @@ mc.models.voronoi = function voronoi(model) {
     //------------------------------------------------------------
 
     this.__chart__.chart    = chart;
-    this.__chart__.update   = function() { return instance.container.call(chart) };
+    this.__chart__.update   = () => instance.container.call(chart);
     this.__chart__.dispatch = instance.dispatch;
     this.__chart__.id       = instance.id;
 
@@ -241,7 +233,7 @@ mc.models.voronoi = function voronoi(model) {
       instance.tileClips = model.layers.tileClips.draw(instance.wrap.select('#mc-tiles-clip-' + instance.id), model, instance, data);
 
       instance.g.select('.mc-tiles')
-          .attr('clip-path', 'url(#mc-tiles-clip-' + instance.id + ')');
+          .attr('clip-path', `url(#mc-tiles-clip-${instance.id})`);
     }
 
 
