@@ -81,7 +81,7 @@ mc.models.bar = function bar(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d, i) { return 'mc-bar mc-bar-' + i });
+          .attr('class', (d, i) => 'mc-bar mc-bar-' + i);
       },
       'merge:transition': function(model, instance) {
         return this
@@ -112,7 +112,7 @@ mc.models.bar = function bar(model) {
   chart.calc = function(instance, data) {
 
     model.xyChartBase
-      .xRangeBands(function(model,instance) { return [ [0, instance.width] , .1 ] });
+      .xRangeBands((model,instance) => [ [0, instance.width] , .1 ] );
 
     model.xyChartBase.calc.call(this, instance, data);
 
@@ -121,7 +121,7 @@ mc.models.bar = function bar(model) {
     //      **consider placement based on parent chart overriding __chart__ values
     //      **remember that __chart__.dimension is used to store old dimension from last call
     this.__chart__.chart    = chart;
-    this.__chart__.update   = function() { return instance.container.call(chart) };
+    this.__chart__.update   = () => instance.container.call(chart);
 
     return chart;
   };

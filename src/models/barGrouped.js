@@ -22,7 +22,7 @@ mc.models.barGrouped = function barGrouped(model) {
   model.layers.groups
     .on('merge:transition', function(model, instance) {
       return this
-        .attr('transform', function(d,i) { return 'translate(' + (i * instance.x2.rangeBand()) + ',0)' });
+        .attr('transform', (d,i) => `translate(${i * instance.x2.rangeBand()},0)` );
     });
 
   model.layers.bars
@@ -47,7 +47,7 @@ mc.models.barGrouped = function barGrouped(model) {
 
 
     this.__chart__.chart  = chart;
-    this.__chart__.update = function() { return instance.container.call(chart) };
+    this.__chart__.update = () => instance.container.call(chart);
 
 
     return chart;

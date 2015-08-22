@@ -22,7 +22,7 @@ mc.models.barStacked = function barStacked(model) {
   model.layers.bars
     .on('enter', function(model, instance) {
       return this
-        .attr('y', function(d) { return instance.y0(d.y + d.y0) })
+        .attr('y', d => instance.y0(d.y + d.y0))
         .attr('height', function() {
           return Math.abs(instance.y0Calc.apply(this, arguments) - instance.y(0))
         });
@@ -30,7 +30,7 @@ mc.models.barStacked = function barStacked(model) {
 
     .on('merge:transition', function(model, instance) {
       return this
-        .attr('y', function(d) { return instance.y(d.y + d.y0) })
+        .attr('y', d => instance.y(d.y + d.y0))
         .attr('height', function() {
           return Math.abs(instance.yCalc.apply(this, arguments) - instance.y(0))
         });
@@ -49,7 +49,7 @@ mc.models.barStacked = function barStacked(model) {
 
     //TODO: should be using chart.series_
     instance.stack(
-      data.filter(function(d) { return !d.disabled })
+      data.filter(d => !d.disabled)
     );
 
     //TODO: currently positive only y values... consider stacking postivies, stacking negatives, then combining
@@ -57,10 +57,10 @@ mc.models.barStacked = function barStacked(model) {
                            d3.max(
                              model
                                .series_(data)
-                               .filter(function(d) { return !d.disabled })
+                               .filter(d => !d.disabled)
                                .map(model.values_)
                                .pop() //Only need to check last series for stacked max
-                               .map(function(d) { return d.y + d.y0 })
+                               .map(d => d.y + d.y0)
                            )
                           ]);
 
@@ -69,7 +69,7 @@ mc.models.barStacked = function barStacked(model) {
 
 
     this.__chart__.chart  = chart;
-    this.__chart__.update = function() { return instance.container.call(chart) };
+    this.__chart__.update = () => instance.container.call(chart);
 
 
     return chart;
