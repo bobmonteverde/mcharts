@@ -106,7 +106,7 @@ mc.models.xyChartBase = function xyChartBase(model) {
   mc.rebind(chart, model.xyBase);
 
 
-  chart.renderLegend = _ => {
+  chart.renderLegend = function(_) {
     if (!arguments.length) return model.renderLegend;
     model.renderLegend = _;
 
@@ -124,7 +124,7 @@ mc.models.xyChartBase = function xyChartBase(model) {
     return chart;
   };
 
-  chart.renderAxes = _ => {
+  chart.renderAxes = function(_) {
     if (!arguments.length) return model.renderAxes;
     model.renderAxes = _;
 
