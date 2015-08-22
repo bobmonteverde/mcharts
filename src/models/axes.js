@@ -257,122 +257,122 @@ mc.models.axes = function axes(model) {
   chart.rightAxis  = model.rightAxis;
 
 
-  chart.bottomScale = _ => {
+  chart.bottomScale = function(_) {
     if (!arguments.length) return model.bottom;
     model.bottom = _;
     return chart;
   };
 
-  chart.topScale = _ => {
+  chart.topScale = function(_) {
     if (!arguments.length) return model.top;
     model.top = _;
     return chart;
   };
 
-  chart.leftScale = _ => {
+  chart.leftScale = function(_) {
     if (!arguments.length) return model.left;
     model.left = _;
     return chart;
   };
 
-  chart.rightScale = _ => {
+  chart.rightScale = function(_) {
     if (!arguments.length) return model.right;
     model.right = _;
     return chart;
   };
 
   //TODO: might want to rename these for when they are rebinded to complete charts (ie. barChart.renderRight vs. barChart.renderRightAxis)
-  chart.renderBottom = _ => {
+  chart.renderBottom = function(_) {
     if (!arguments.length) return model.renderBottom;
     model.renderBottom = _;
     return chart;
   };
 
-  chart.renderTop = _ => {
+  chart.renderTop = function(_) {
     if (!arguments.length) return model.renderTop;
     model.renderTop = _;
     return chart;
   };
 
-  chart.renderLeft = _ => {
+  chart.renderLeft = function(_) {
     if (!arguments.length) return model.renderLeft;
     model.renderLeft = _;
     return chart;
   };
 
-  chart.renderRight = _ => {
+  chart.renderRight = function(_) {
     if (!arguments.length) return model.renderRight;
     model.renderRight = _;
     return chart;
   };
 
-  chart.bottomLabel = _ => {
+  chart.bottomLabel = function(_) {
     if (!arguments.length) return model.bottomLabel_;
     model.bottomLabel_ = d3.functor(_);
     return chart;
   };
 
-  chart.topLabel = _ => {
+  chart.topLabel = function(_) {
     if (!arguments.length) return model.topLabel_;
     model.topLabel_ = d3.functor(_);
     return chart;
   };
 
-  chart.leftLabel = _ => {
+  chart.leftLabel = function(_) {
     if (!arguments.length) return model.leftLabel_;
     model.leftLabel_ = d3.functor(_);
     return chart;
   };
 
-  chart.rightLabel = _ => {
+  chart.rightLabel = function(_) {
     if (!arguments.length) return model.rightLabel_;
     model.rightLabel_ = d3.functor(_);
     return chart;
   };
 
-  chart.bottomTickSize = _ => {
+  chart.bottomTickSize = function(_) {
     if (!arguments.length) return model.bottomTickSize_;
     model.bottomTickSize_ = d3.functor(_);
     return chart;
   };
 
-  chart.topTickSize = _ => {
+  chart.topTickSize = function(_) {
     if (!arguments.length) return model.topTickSize_;
     model.topTickSize_ = d3.functor(_);
     return chart;
   };
 
-  chart.leftTickSize = _ => {
+  chart.leftTickSize = function(_) {
     if (!arguments.length) return model.leftTickSize_;
     model.leftTickSize_ = d3.functor(_);
     return chart;
   };
 
-  chart.rightTickSize = _ => {
+  chart.rightTickSize = function(_) {
     if (!arguments.length) return model.rightTickSize_;
     model.rightTickSize_ = d3.functor(_);
     return chart;
   };
 
-  chart.bottomTicks = _ => {
+  chart.bottomTicks = function(_) {
     if (!arguments.length) return model.bottomTicks_;
     model.bottomTicks_ = d3.functor(_);
     return chart;
   };
 
-  chart.topTicks = _ => {
+  chart.topTicks = function(_) {
     if (!arguments.length) return model.topTicks_;
     model.topTicks_ = d3.functor(_);
     return chart;
   };
 
-  chart.leftTicks = _ => {
+  chart.leftTicks = function(_) {
     if (!arguments.length) return model.leftTicks_;
     model.leftTicks_ = d3.functor(_);
     return chart;
   };
 
-  chart.rightTicks = _ => {
+  chart.rightTicks = function(_) {
     if (!arguments.length) return model.rightTicks_;
     model.rightTicks_ = d3.functor(_);
     return chart;
