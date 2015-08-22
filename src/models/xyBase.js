@@ -20,11 +20,11 @@ mc.models.xyBase = function xyBase(model) {
   model.svgBase
     .dimension({
       key: 'x',
-      range: function(model,instance) { return [0, instance.width] }
+      range: (model, instance) => [0, instance.width]
     })
     .dimension({
       key: 'y',
-      range: function(model,instance) { return [instance.height, 0] }
+      range: (model, instance) => [instance.height, 0]
     })
     //.dimension({
       //key: 'color',
