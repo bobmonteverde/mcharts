@@ -49,15 +49,16 @@ mc.models.chartBase = function chartBase(model) {
   model.calcScales  = true;
 
   // Accessors
-  model.width_      = function(container, data) { return parseInt(container.style('width')) }; // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
-  model.height_     = function(container, data) { return parseInt(container.style('height')) };
-  model.label_      = function(series, j) { return series.key };
+  //model.width_      = function(container, data) { return parseInt(container.style('width')) }; // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
+  model.width_      = (container, data) => parseInt(container.style('width')) // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
+  model.height_     = (container, data) => parseInt(container.style('height'))
+  model.label_      = (series, j) => series.key
   //model.series_     = function(data) { return data.filter(function(d) { return !d.disabled }) }; //TODO: need to handle disabled differently
-  model.series_     = function(data) { return data }; //TODO: think about best way to handle disabled if not here
-  model.values_     = function(series, i) { return series.values };
-  model.seriesKey_  = function(series, i) { return series.key || i };
-  model.pointKey_   = function(point, i, j) { return i };
-  model.id_         = function() { return Math.round(Math.random() * 899999) + 100000 };
+  model.series_     = (data) => data //TODO: think about best way to handle disabled if not here
+  model.values_     = (series, i) => series.values
+  model.seriesKey_  = (series, i) => series.key || i
+  model.pointKey_   = (point, i, j) => i
+  model.id_         = () => Math.round(Math.random() * 899999) + 100000
 
 
   //TODO: consider moving dimensioos into it's own file for re-use outside of SVG world
@@ -89,12 +90,12 @@ mc.models.chartBase = function chartBase(model) {
     if (model.calcScales) {
       flatData = d3.merge(
         model.series_(data)
-          .filter(function(d) { return !d.disabled })
-          .map(function(series, j) {
-            return model.values_(series, j).map(function(d, i) {
+          .filter(d => !d.disabled)
+          .map((series, j) => {
+            return model.values_(series, j).map((d, i) => {
               var obj  = {};
 
-              model.dimensions.forEach(function(dim) {
+              model.dimensions.forEach(dim => {
                 if (model[dim.key + 'Disable']) return;
                 obj[dim.key] = model[dim.key + '_'].call(this, d, i, j);
               });
@@ -105,7 +106,7 @@ mc.models.chartBase = function chartBase(model) {
       );
 
       // Set dimensions domain and range (rangePoints, rangeBands, rangeRoundBands if ordinal)
-      model.dimensions.forEach(function(dim) {
+      model.dimensions.forEach(dim => {
         if (model[dim.key + 'Disable']) return;
 
         //TODO: investigate dimension code, see if it makes sense to have on m (instance) not just o (model)
@@ -114,15 +115,17 @@ mc.models.chartBase = function chartBase(model) {
           model[dim.key + 'Scale']
             .domain(dim.domain && dim.domain(model,instance) ||
                     typeof dim.force !== 'undefined' ?
-                      flatData.map(function(d) { return d[dim.key] }).concat(dim.force)
-                    : flatData.map(function(d) { return d[dim.key] }) );
+                      flatData.map(d => d[dim.key] ).concat(dim.force)
+                    : flatData.map(d => d[dim.key] )
+                   );
         } else {
           // Quantitative Scale
           model[dim.key + 'Scale']
             .domain(dim.domain && dim.domain(model,instance) ||
                     typeof dim.force !== 'undefined' ?
-                      d3.extent(d3.extent(flatData, function(d) { return d[dim.key] }).concat(dim.force))
-                    : d3.extent(flatData, function(d) { return d[dim.key] }) );
+                      d3.extent(d3.extent(flatData, d => d[dim.key] ).concat(dim.force))
+                    : d3.extent(flatData, d => d[dim.key] )
+                   );
         }
 
 
@@ -159,7 +162,7 @@ mc.models.chartBase = function chartBase(model) {
     // Create __chart__ object on DOM container element for storing some data references (ie. scales)
     this.__chart__ = this.__chart__ || {};
 
-    model.dimensions.forEach(function(dim) {
+    model.dimensions.forEach(dim => {
       instance[dim.key]     = model[dim.key + 'Scale'].copy();
       instance[dim.key+'0'] = that.__chart__[dim.key] || instance[dim.key];
 
@@ -171,7 +174,7 @@ mc.models.chartBase = function chartBase(model) {
 
     // Store each dimension on __chart__ to retrieve later
     // (used for getting the scale from the last time the chart was called)
-    model.dimensions.forEach(function(dim) {
+    model.dimensions.forEach(dim => {
       that.__chart__[dim.key] = instance[dim.key];
     })
 
@@ -211,55 +214,55 @@ mc.models.chartBase = function chartBase(model) {
   //============================================================
   // Expose Public API
 
-  chart.chartName = function(_) {
+  chart.chartName = _ => {
     if (!arguments.length) return model.name;
     model.name = _;
     return chart;
   };
 
-  chart.id = function(_) {
+  chart.id = _ => {
     if (!arguments.length) return id_;
     id_ = d3.functor(_);
     return chart;
   };
 
-  chart.margin = function(_) {
+  chart.margin = _ => {
     if (!arguments.length) return model.margin;
     model.margin = mc.extend(model.margin, _);
     return chart;
   };
 
-  chart.width = function(_) {
+  chart.width = _ => {
     if (!arguments.length) return model.width_;
     model.width_ = d3.functor(_);
     return chart;
   };
 
-  chart.height = function(_) {
+  chart.height = _ => {
     if (!arguments.length) return model.height_;
     model.height_ = d3.functor(_);
     return chart;
   };
 
-  chart.calcScales = function(_) {
+  chart.calcScales = _ => {
     if (!arguments.length) return model.calcScales;
     model.calcScales = _;
     return chart;
   };
 
-  chart.label = function(_) {
+  chart.label = _ => {
     if (!arguments.length) return model.label_;
     model.label_ = d3.functor(_);
     return chart;
   };
 
-  chart.series = function(_) {
+  chart.series = _ => {
     if (!arguments.length) return model.series_;
     model.series_ = d3.functor(_);
     return chart;
   };
 
-  chart.values = function(_) {
+  chart.values = _ => {
     if (!arguments.length) return model.values_;
     model.values_ = d3.functor(_);
     return chart;
@@ -267,7 +270,7 @@ mc.models.chartBase = function chartBase(model) {
 
   // This is used for adding a new dimension to the list of dimenstions.
   // TODO: consider a method to remove a dimension, but may not be needed
-  chart.dimension = function(_) {
+  chart.dimension = _ => {
     if (!arguments.length) return model.dimensions;
     //TODO: consider auto building dimension if provided a string, ie. 'x'
     model.dimensions.push(_);
@@ -288,58 +291,58 @@ mc.models.chartBase = function chartBase(model) {
 
     // build model.dimensionScale and chart.dimensionScale
     model[dim.key + 'Scale'] = dim.scale || d3.scale.linear();
-    chart[dim.key + 'Scale'] = function(_) {
+    chart[dim.key + 'Scale'] = _ => {
       if (!arguments.length) return model[dim.key + 'Scale'];
       model[dim.key + 'Scale'] = _;
       return chart;
     };
 
     // build model.dimension_ and chart.dimension_
-    model[dim.key + '_'] = dim.accessor || function(d) { return d[dim.key] };
-    chart[dim.key] = function(_) {
+    model[dim.key + '_'] = dim.accessor || (d => d[dim.key]);
+    chart[dim.key] = _ => {
       if (!arguments.length) return model[dim.key + '_'];
       model[dim.key + '_'] = d3.functor(_);
       return chart;
     };
 
     model[dim.key + 'Disable'] = dim.disable;
-    chart[dim.key + 'Disable'] = function(_) {
+    chart[dim.key + 'Disable'] = _ => {
       if (!arguments.length) return model[dim.key + 'Disable'];
       model[dim.key + 'Disable'] = _;
       return chart;
     };
 
-    chart[dim.key + 'Range'] = function(_) {
+    chart[dim.key + 'Range'] = _ => {
       if (!arguments.length) return dim.range;
       dim.range = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangePoints'] = function(_) {
+    chart[dim.key + 'RangePoints'] = _ => {
       if (!arguments.length) return dim.rangePoints;
       dim.rangePoints = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangeBands'] = function(_) {
+    chart[dim.key + 'RangeBands'] = _ => {
       if (!arguments.length) return dim.rangeBands;
       dim.rangeBands = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangeRoundBands'] = function(_) {
+    chart[dim.key + 'RangeRoundBands'] = _ => {
       if (!arguments.length) return dim.rangeRoundBands;
       dim.rangeRoundBands = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'Domain'] = function(_) {
+    chart[dim.key + 'Domain'] = _ => {
       if (!arguments.length) return dim.domain;
       dim.domain = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'Force'] = function(_) {
+    chart[dim.key + 'Force'] = _ => {
       if (!arguments.length) return dim.force;
       dim.force = _;
       return chart;
