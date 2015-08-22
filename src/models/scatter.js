@@ -19,8 +19,8 @@ mc.models.scatter = function scatter(model) {
   // Accessors
   model.tooltip_      = function getTooltip(d, i, j) {
                           var format = d3.format(',.2r');
-                          return '<span class="mc-tooltip-x">' + format(model.x_.apply(this, arguments)) + ':&nbsp;</span>' +
-                                 '<span class="mc-tooltip-y">' + format(model.y_.apply(this, arguments)) + '</span>';
+                          return `<span class="mc-tooltip-x">${format(model.x_.apply(this, arguments))}:&nbsp;</span>` + //TODO: use single template string instead of concatenating 2?
+                                 `<span class="mc-tooltip-y">${format(model.y_.apply(this, arguments))}</span>`;
                         };
 
 
@@ -53,8 +53,8 @@ mc.models.scatter = function scatter(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d,i) { return 'mc-group mc-group-' + i })
-          .classed('mc-disabled', function(d) { return d.disabled });
+          .attr('class', (d,i) => `mc-group mc-group-${i}`)
+          .classed('mc-disabled', d => d.disabled);
       },
       'merge:transition': function(model, instance) {
         return this
@@ -99,7 +99,7 @@ mc.models.scatter = function scatter(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d, i) { return 'mc-point mc-point-' + i });
+          .attr('class', (d, i) => `mc-point mc-point-${i}`);
       },
       'merge:transition': function(model, instance) {
         return this
@@ -131,14 +131,14 @@ mc.models.scatter = function scatter(model) {
     model.xyChartBase.calc.call(this, instance, data);
 
     instance.dispatch = this.__chart__.dispatch || d3.dispatch(
-                                            'click'
-                                          , 'dblclick'
-                                          , 'mouseover'
-                                          , 'mouseout'
-                                          );
+                                                      'click'
+                                                    , 'dblclick'
+                                                    , 'mouseover'
+                                                    , 'mouseout'
+                                                    );
 
     this.__chart__.chart    = chart;
-    this.__chart__.update   = function() { return instance.container.call(chart) };
+    this.__chart__.update   = () => instance.container.call(chart);
     this.__chart__.dispatch = instance.dispatch;
 
     return chart;
@@ -197,17 +197,17 @@ mc.models.scatter = function scatter(model) {
 
     //TODO: need to bind events on circles when not using voronoi
     function pointClick(d, i, j) {
-      var point = instance.g.select('.mc-group-' + j + ' .mc-point-' + i);
+      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       instance.dispatch.click.apply(point.node(), arguments);
     }
 
     function pointDblClick(d, i, j) {
-      var point = instance.g.select('.mc-group-' + j + ' .mc-point-' + i);
+      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       instance.dispatch.dblclick.apply(point.node(), arguments);
     }
 
     function pointMouseover(d, i, j) {
-      var point = instance.g.select('.mc-group-' + j + ' .mc-point-' + i);
+      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       clearHover();
       hideTooltip();
       showTooltip.apply(this, arguments);
@@ -216,7 +216,7 @@ mc.models.scatter = function scatter(model) {
     }
 
     function pointMouseout(d, i, j) {
-      var point = instance.g.select('.mc-group-' + j + ' .mc-point-' + i);
+      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       clearHover();
       hideTooltip();
       instance.dispatch.mouseout.apply(point.node(), arguments);
@@ -257,7 +257,7 @@ mc.models.scatter = function scatter(model) {
       instance.g.select('.mc-groups')
           .classed('mc-groupHover', true);
       instance.groups
-          .classed('mc-hover', function(d) { return d.hover });
+          .classed('mc-hover', d => d.hover);
     }
 
     function unhoverSeries(d) {
