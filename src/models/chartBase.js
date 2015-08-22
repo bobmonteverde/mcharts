@@ -214,55 +214,55 @@ mc.models.chartBase = function chartBase(model) {
   //============================================================
   // Expose Public API
 
-  chart.chartName = _ => {
+  chart.chartName = function(_) {
     if (!arguments.length) return model.name;
     model.name = _;
     return chart;
   };
 
-  chart.id = _ => {
+  chart.id = function(_) {
     if (!arguments.length) return id_;
     id_ = d3.functor(_);
     return chart;
   };
 
-  chart.margin = _ => {
+  chart.margin = function(_) {
     if (!arguments.length) return model.margin;
     model.margin = mc.extend(model.margin, _);
     return chart;
   };
 
-  chart.width = _ => {
+  chart.width = function(_) {
     if (!arguments.length) return model.width_;
     model.width_ = d3.functor(_);
     return chart;
   };
 
-  chart.height = _ => {
+  chart.height = function(_) {
     if (!arguments.length) return model.height_;
     model.height_ = d3.functor(_);
     return chart;
   };
 
-  chart.calcScales = _ => {
+  chart.calcScales = function(_) {
     if (!arguments.length) return model.calcScales;
     model.calcScales = _;
     return chart;
   };
 
-  chart.label = _ => {
+  chart.label = function(_) {
     if (!arguments.length) return model.label_;
     model.label_ = d3.functor(_);
     return chart;
   };
 
-  chart.series = _ => {
+  chart.series = function(_) {
     if (!arguments.length) return model.series_;
     model.series_ = d3.functor(_);
     return chart;
   };
 
-  chart.values = _ => {
+  chart.values = function(_) {
     if (!arguments.length) return model.values_;
     model.values_ = d3.functor(_);
     return chart;
@@ -270,7 +270,7 @@ mc.models.chartBase = function chartBase(model) {
 
   // This is used for adding a new dimension to the list of dimenstions.
   // TODO: consider a method to remove a dimension, but may not be needed
-  chart.dimension = _ => {
+  chart.dimension = function(_) {
     if (!arguments.length) return model.dimensions;
     //TODO: consider auto building dimension if provided a string, ie. 'x'
     model.dimensions.push(_);
@@ -291,58 +291,58 @@ mc.models.chartBase = function chartBase(model) {
 
     // build model.dimensionScale and chart.dimensionScale
     model[dim.key + 'Scale'] = dim.scale || d3.scale.linear();
-    chart[dim.key + 'Scale'] = _ => {
+    chart[dim.key + 'Scale'] = function(_) {
       if (!arguments.length) return model[dim.key + 'Scale'];
       model[dim.key + 'Scale'] = _;
       return chart;
     };
 
     // build model.dimension_ and chart.dimension_
-    model[dim.key + '_'] = dim.accessor || (d => d[dim.key]);
-    chart[dim.key] = _ => {
+    model[dim.key + '_'] = dim.accessor || function(d) { return d[dim.key] };
+    chart[dim.key] = function(_) {
       if (!arguments.length) return model[dim.key + '_'];
       model[dim.key + '_'] = d3.functor(_);
       return chart;
     };
 
     model[dim.key + 'Disable'] = dim.disable;
-    chart[dim.key + 'Disable'] = _ => {
+    chart[dim.key + 'Disable'] = function(_) {
       if (!arguments.length) return model[dim.key + 'Disable'];
       model[dim.key + 'Disable'] = _;
       return chart;
     };
 
-    chart[dim.key + 'Range'] = _ => {
+    chart[dim.key + 'Range'] = function(_) {
       if (!arguments.length) return dim.range;
       dim.range = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangePoints'] = _ => {
+    chart[dim.key + 'RangePoints'] = function(_) {
       if (!arguments.length) return dim.rangePoints;
       dim.rangePoints = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangeBands'] = _ => {
+    chart[dim.key + 'RangeBands'] = function(_) {
       if (!arguments.length) return dim.rangeBands;
       dim.rangeBands = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'RangeRoundBands'] = _ => {
+    chart[dim.key + 'RangeRoundBands'] = function(_) {
       if (!arguments.length) return dim.rangeRoundBands;
       dim.rangeRoundBands = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'Domain'] = _ => {
+    chart[dim.key + 'Domain'] = function(_) {
       if (!arguments.length) return dim.domain;
       dim.domain = d3.functor(_);
       return chart;
     };
 
-    chart[dim.key + 'Force'] = _ => {
+    chart[dim.key + 'Force'] = function(_) {
       if (!arguments.length) return dim.force;
       dim.force = _;
       return chart;
