@@ -34,6 +34,6 @@ gulp.task('default', 'Build production files', ['prepare-default'], cb => {
 });
 
 gulp.task('prepare-default', 'Do all the necessary preparatory work for the default task', ['clean'], cb => {
-  runSequence(['core-scripts', 'core-styles'], cb);
+  runSequence(['core-eslint', 'core-scripts', 'core-styles'], cb);
 });
 
