@@ -20,7 +20,7 @@ Layer.prototype.on = function(name, handler) {
 
   this._handlers[eventName].push({
     namespace: namespace,
-    callback: handler,
+    callback:  handler,
   });
 
   return this;
@@ -57,22 +57,22 @@ Layer.prototype.draw = function(base, model, instance, data) {
 
   let events = [
     {
-      name: 'update',
+      name:      'update',
       selection: bound,
     },
     {
-      name: 'enter',
+      name:      'enter',
       selection: entering,
-      method: this.insert,  // TODO: currently doesn't get model/instance, shouldn't need it, but might
+      method:    this.insert,  // TODO: currently doesn't get model/instance, shouldn't need it, but might
     },
     {
-      name: 'merge',
+      name:      'merge',
       selection: bound,
     },
     {
-      name: 'exit',
+      name:      'exit',
       selection: bound,
-      method: bound.exit,
+      method:    bound.exit,
     },
   ];
 

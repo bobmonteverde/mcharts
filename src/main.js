@@ -135,7 +135,6 @@ mc.render.start = stepSize => {
 // -----------------------------------------------------------
 
 
-
 /*
 // TODO: Figure out best way to accomplish this
 mc.select = function(selector) {

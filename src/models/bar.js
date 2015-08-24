@@ -120,9 +120,8 @@ mc.models.bar = function bar(model) {
 
 
   chart.calc = function(instance, data) {
-
     model.xyChartBase
-      .xRangeBands((model,instance) => [ [0, instance.width] , .1 ] );
+      .xRangeBands((model, instance) => [ [0, instance.width], .1 ] );
 
     model.xyChartBase.calc.call(this, instance, data);
 
@@ -138,7 +137,6 @@ mc.models.bar = function bar(model) {
 
 
   chart.build = function(instance, data) {
-
     model.xyChartBase.build.call(this, instance, data);
 
     //------------------------------------------------------------

@@ -12,7 +12,7 @@
   // Duplicate of mc.utils.windowSize, here so there are no outside dependencies
   function getWindowSize() {
     // Sane defaults
-    var size = { width: 640, height: 480 };
+    let size = { width: 640, height: 480 };
 
     // Earlier IE uses Doc.body
     if (document.body && document.body.offsetWidth) {
