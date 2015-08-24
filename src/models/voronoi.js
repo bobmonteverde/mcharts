@@ -1,6 +1,5 @@
 
 mc.models.voronoi = function voronoi(model) {
-
   model = model || {};
 
   //============================================================
@@ -42,11 +41,11 @@ mc.models.voronoi = function voronoi(model) {
             instance.dispatch.click(
               d.point, d.pointIndex, d.seriesIndex, // the usual standard 3 arguments
               {
-                point: d.point
-              , series: d.series
-              , pos: [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)]
-              , seriesIndex: d.seriesIndex
-              , pointIndex: d.pointIndex
+                point:       d.point,
+                series:      d.series,
+                pos:         [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)],
+                seriesIndex: d.seriesIndex,
+                pointIndex:  d.pointIndex,
               }
             );
           })
@@ -54,11 +53,11 @@ mc.models.voronoi = function voronoi(model) {
             instance.dispatch.dblclick(
               d.point, d.pointIndex, d.seriesIndex, // the usual standard argument
               {
-                point: d.point
-              , series: d.series
-              , pos: [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)]
-              , seriesIndex: d.seriesIndex
-              , pointIndex: d.pointIndex
+                point:       d.point,
+                series:      d.series,
+                pos:         [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)],
+                seriesIndex: d.seriesIndex,
+                pointIndex:  d.pointIndex,
               }
             );
           })
@@ -66,11 +65,11 @@ mc.models.voronoi = function voronoi(model) {
             instance.dispatch.mouseover(
               d.point, d.pointIndex, d.seriesIndex, // the usual standard argument
               {
-                point: d.point
-              , series: d.series
-              , pos: [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)]
-              , seriesIndex: d.seriesIndex
-              , pointIndex: d.pointIndex
+                point:       d.point,
+                series:      d.series,
+                pos:         [instance.xCalc.call(this, d.point, d.pointIndex, d.seriesIndex), instance.yCalc.call(this, d.point, d.pointIndex, d.seriesIndex)],
+                seriesIndex: d.seriesIndex,
+                pointIndex:  d.pointIndex,
               }
             );
           })
@@ -78,18 +77,17 @@ mc.models.voronoi = function voronoi(model) {
             instance.dispatch.mouseout(
               d.point, d.pointIndex, d.seriesIndex, // the usual standard argument
               {
-                point: d.point
-              , series: d.series
-              , seriesIndex: d.seriesIndex
-              , pointIndex: d.pointIndex
+                point:       d.point,
+                series:      d.series,
+                seriesIndex: d.seriesIndex,
+                pointIndex:  d.pointIndex,
               }
             );
           });
-
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', (d,i) => `mc-tile mc-tile-${i} mc-group-${d.seriesIndex}`)
+          .attr('class', (d, i) => `mc-tile mc-tile-${i} mc-group-${d.seriesIndex}`)
           .attr('d', d => (d.data.length === 0) ? '' : `M${d.data.join('L')}Z`);
       },
       'exit': function(model, instance) {
@@ -114,8 +112,8 @@ mc.models.voronoi = function voronoi(model) {
       },
       'merge': function(model, instance) {
         return this
-          .attr('cx', function(d) { return d[0] })
-          .attr('cy', function(d) { return d[1] });
+          .attr('cx', function(d) { return d[0]; })
+          .attr('cy', function(d) { return d[1]; });
       },
       'exit': function(model, instance) {
         return this.remove();
@@ -127,8 +125,19 @@ mc.models.voronoi = function voronoi(model) {
   //------------------------------------------------------------
 
 
-  chart.calc = function(instance, data) {
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
 
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
+
+  chart.calc = function(instance, data) {
     model.xyChartBase.calc.call(this, instance, data);
 
     instance.dispatch = this.__chart__.dispatch || d3.dispatch('click', 'dblclick', 'mouseover', 'mouseout');
@@ -137,7 +146,7 @@ mc.models.voronoi = function voronoi(model) {
     //------------------------------------------------------------
     // Setup Chart Scales and Data Layout Calculations
 
-    var allGroups = model.series_(data);
+    let allGroups = model.series_(data);
 
     instance.vertices = d3.merge(
       model.series_(data)
@@ -145,22 +154,22 @@ mc.models.voronoi = function voronoi(model) {
           if (group.disabled) return false;
           return model.values_(group, groupIndex)
             .map(function(point, pointIndex) {
-              var pX = model.x_.call(this, point, pointIndex, groupIndex) + Math.random() * 1e-10,
-                  pY = model.y_.call(this, point, pointIndex, groupIndex) + Math.random() * 1e-10;
+              let pX = model.x_.call(this, point, pointIndex, groupIndex) + Math.random() * 1e-10;
+              let pY = model.y_.call(this, point, pointIndex, groupIndex) + Math.random() * 1e-10;
 
               return [
-                  instance.x(pX)
-                , instance.y(pY)
-                , point
-                , pointIndex
-                , groupIndex
-                ];
+                instance.x(pX),
+                instance.y(pY),
+                point,
+                pointIndex,
+                groupIndex,
+              ];
             })
             .filter(function(pointArray) {
               return model.active_(pointArray[2], pointArray[3]);
-            })
+            });
         })
-        .filter(function(d) { return !!d }) //remove disabled groups
+        .filter(d => !!d) //remove disabled groups
     );
 
     // Add point outside of corners (helps with shaping elements near the corner)
@@ -177,26 +186,26 @@ mc.models.voronoi = function voronoi(model) {
     //TODO: use voronoi.clipExtent to clip around outside border (might be required for IE, and jsut a good idea in general)
     //      **I believe clipExtent can be used instead of instead.bounds below
     instance.bounds = d3.geom.polygon([
-      [-10       , -10        ]
-    , [-10       , instance.height+10]
-    , [instance.width+10, instance.height+10]
-    , [instance.width+10, -10        ]
+      [-10, -10],
+      [-10, instance.height + 10],
+      [instance.width + 10, instance.height + 10],
+      [instance.width + 10, -10],
     ]);
 
 
     instance.voronoi = d3.geom.voronoi(instance.vertices).map((d, i) => {
-      var seriesIndex = instance.vertices[i][4],
-          pointIndex  = instance.vertices[i][3],
-          series      = allGroups[seriesIndex],
-          point       = model.values_(series, seriesIndex)[pointIndex];
+      let seriesIndex = instance.vertices[i][4];
+      let pointIndex  = instance.vertices[i][3];
+      let series      = allGroups[seriesIndex];
+      let point       = model.values_(series, seriesIndex)[pointIndex];
 
       return {
-        'data': instance.bounds.clip(d)
-      , 'seriesIndex': seriesIndex
-      , 'series': series
-      , 'pointIndex': pointIndex
-      , 'point': point
-      }
+        'data':        instance.bounds.clip(d),
+        'seriesIndex': seriesIndex,
+        'series':      series,
+        'pointIndex':  pointIndex,
+        'point':       point,
+      };
     });
 
     //------------------------------------------------------------
@@ -212,7 +221,6 @@ mc.models.voronoi = function voronoi(model) {
 
 
   chart.build = function(instance, data) {
-
     model.xyChartBase.build.call(this, instance, data);
 
     //------------------------------------------------------------
@@ -241,20 +249,7 @@ mc.models.voronoi = function voronoi(model) {
 
 
     return chart;
-  }
-
-
-
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
+  };
 
 
   //============================================================
@@ -278,4 +273,4 @@ mc.models.voronoi = function voronoi(model) {
   //------------------------------------------------------------
 
   return chart;
-}
+};

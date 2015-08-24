@@ -1,6 +1,5 @@
 
 mc.models.svgBase = function svgBase(model) {
-
   model = model || {};
 
   //============================================================
@@ -19,18 +18,27 @@ mc.models.svgBase = function svgBase(model) {
   //------------------------------------------------------------
 
 
+  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
+
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
 
   chart.calc = function(instance, data) {
-
     model.chartBase.calc.call(this, instance, data);
 
     return chart;
   };
 
 
-
   chart.build = function(instance, data) {
-
     model.chartBase.build.call(this, instance, data); // This currently DOES NOTHING, but here incase someting is added
 
     //------------------------------------------------------------
@@ -53,19 +61,6 @@ mc.models.svgBase = function svgBase(model) {
 
     return chart;
   };
-
-
-  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
 
 
   //============================================================
