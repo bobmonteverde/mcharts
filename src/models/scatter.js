@@ -1,6 +1,5 @@
 
 mc.models.scatter = function scatter(model) {
-
   model = model || {};
 
   //============================================================
@@ -18,11 +17,10 @@ mc.models.scatter = function scatter(model) {
 
   // Accessors
   model.tooltip_      = function getTooltip(d, i, j) {
-                          var format = d3.format(',.2r');
+                          let format = d3.format(',.2r');
                           return `<span class="mc-tooltip-x">${format(model.x_.apply(this, arguments))}:&nbsp;</span>` + //TODO: use single template string instead of concatenating 2?
                                  `<span class="mc-tooltip-y">${format(model.y_.apply(this, arguments))}</span>`;
                         };
-
 
 
   // Setup Component Static Settings
@@ -47,17 +45,17 @@ mc.models.scatter = function scatter(model) {
     },
     events: {
       'enter': function(model, instance) {
-        return this
+        return this;
           //.style('fill',   instance.color0Calc)  //TODO: maybe use chart.colorUse as toggle for this
           //.style('stroke', instance.color0Calc);
       },
       'merge': function(model, instance) {
         return this
-          .attr('class', (d,i) => `mc-group mc-group-${i}`)
+          .attr('class', (d, i) => `mc-group mc-group-${i}`)
           .classed('mc-disabled', d => d.disabled);
       },
       'merge:transition': function(model, instance) {
-        return this
+        return this;
           //.style('fill',   instance.colorCalc)
           //.style('stroke', instance.colorCalc)
       },
@@ -105,7 +103,7 @@ mc.models.scatter = function scatter(model) {
         return this
           .attr('r',  instance.sizeCalc)
           .attr('cx', instance.xCalc)
-          .attr('cy', instance.yCalc)
+          .attr('cy', instance.yCalc);
           //.style('fill',   instance.colorCalc)
           //.style('stroke', instance.colorCalc)
       },
@@ -126,8 +124,19 @@ mc.models.scatter = function scatter(model) {
   //------------------------------------------------------------
 
 
-  chart.calc = function(instance, data) {
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
 
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
+
+  chart.calc = function(instance, data) {
     model.xyChartBase.calc.call(this, instance, data);
 
     instance.dispatch = this.__chart__.dispatch || d3.dispatch(
@@ -146,7 +155,6 @@ mc.models.scatter = function scatter(model) {
 
 
   chart.build = function(instance, data) {
-
     model.xyChartBase.build.call(this, instance, data);
 
     //------------------------------------------------------------
@@ -197,17 +205,17 @@ mc.models.scatter = function scatter(model) {
 
     //TODO: need to bind events on circles when not using voronoi
     function pointClick(d, i, j) {
-      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
+      let point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       instance.dispatch.click.apply(point.node(), arguments);
     }
 
     function pointDblClick(d, i, j) {
-      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
+      let point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       instance.dispatch.dblclick.apply(point.node(), arguments);
     }
 
     function pointMouseover(d, i, j) {
-      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
+      let point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       clearHover();
       hideTooltip();
       showTooltip.apply(this, arguments);
@@ -216,7 +224,7 @@ mc.models.scatter = function scatter(model) {
     }
 
     function pointMouseout(d, i, j) {
-      var point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
+      let point = instance.g.select(`.mc-group-${j} .mc-point-${i}`);
       clearHover();
       hideTooltip();
       instance.dispatch.mouseout.apply(point.node(), arguments);
@@ -231,17 +239,16 @@ mc.models.scatter = function scatter(model) {
     function showTooltip(d, i, j) {
       if (!model.useTooltip) return;
 
-      var left = instance.xCalc.apply(this, arguments) + model.margin.left
-        , top =  instance.yCalc.apply(this, arguments) + model.margin.top
-        ;
+      let left = instance.xCalc.apply(this, arguments) + model.margin.left;
+      let top =  instance.yCalc.apply(this, arguments) + model.margin.top;
 
       mc.tooltip.show({
-        pos: [left, top]
-      , content: model.tooltip_.apply(this, arguments)
-      , gravity: 's'
-      , dist: 20
-      , parent: model.tooltipParent || instance.container.node().parentNode //TODO: default only works if container is SVG element and parentNode is HTML
-      })
+        pos:     [left, top],
+        content: model.tooltip_.apply(this, arguments),
+        gravity: 's',
+        dist:    20,
+        parent:  model.tooltipParent || instance.container.node().parentNode, //TODO: default only works if container is SVG element and parentNode is HTML
+      });
     }
 
     function hideTooltip() {
@@ -266,27 +273,14 @@ mc.models.scatter = function scatter(model) {
       instance.g.select('.mc-groups')
           .classed('mc-groupHover', false);
       instance.groups
-        .classed('mc-hover', false); //TODO: maybe do same as hoverSeries, incase mouse is already over another
+          .classed('mc-hover', false); //TODO: maybe do same as hoverSeries, incase mouse is already over another
     }
 
 
     //------------------------------------------------------------
 
     return chart;
-  }
-
-
-
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
+  };
 
 
   //============================================================
@@ -300,7 +294,7 @@ mc.models.scatter = function scatter(model) {
     if (!arguments.length) return model.renderVoronoi;
     model.renderVoronoi = _;
 
-    if(_) {
+    if (_) {
       model.voronoi = mc.models.voronoi(); // voronoi layer for advanced mouse interaction
       model.voronoi
         //.margin({top: 0, right: 0, bottom: 0, left: 0}) // defaults anyway
@@ -338,7 +332,7 @@ mc.models.scatter = function scatter(model) {
   chart.rebind = function() {
     mc.rebind(chart, model.xyChartBase);
     return chart;
-  }
+  };
 
   //------------------------------------------------------------
 

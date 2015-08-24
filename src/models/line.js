@@ -1,6 +1,5 @@
 
 mc.models.line = function line(model) {
-
   model = model || {};
 
   //============================================================
@@ -33,16 +32,16 @@ mc.models.line = function line(model) {
     events: {
       'merge': function(model, instance) {
         return this
-          .attr('class', (d,i) => `mc-group mc-group-${i}`)
+          .attr('class', (d, i) => `mc-group mc-group-${i}`)
           .classed('mc-disabled', d => d.disabled);
       },
       'exit': function(model, instance) {
         return this
-          .classed('mc-group-exit', true)
+          .classed('mc-group-exit', true);
       },
       //TODO: put remove here instead of in exit to allow other models to utilize an exit transition
       'exit:transition': function(model, instance) {
-        return this.remove()
+        return this.remove();
       }
     }
   });
@@ -51,7 +50,7 @@ mc.models.line = function line(model) {
   model.layers.lines = mc.layer({
     dataBind: function(model, instance, data) {
       return this.selectAll('.mc-path')
-        .data(function() { return [model.values_.apply(this,arguments)] });
+        .data(function() { return [model.values_.apply(this, arguments)]; });
     },
     insert: function() {
       return this.append('path')
@@ -105,9 +104,19 @@ mc.models.line = function line(model) {
   //------------------------------------------------------------
 
 
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
+
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
 
   chart.calc = function(instance, data) {
-
     model.xyChartBase.calc.call(this, instance, data);
 
 
@@ -119,7 +128,6 @@ mc.models.line = function line(model) {
 
 
   chart.build = function(instance, data) {
-
     model.xyChartBase.build.call(this, instance, data);
 
     //------------------------------------------------------------
@@ -139,20 +147,7 @@ mc.models.line = function line(model) {
     //------------------------------------------------------------
 
     return chart;
-  }
-
-
-
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
+  };
 
 
   //============================================================
@@ -171,7 +166,7 @@ mc.models.line = function line(model) {
   chart.rebind = function() {
     mc.rebind(chart, model.xyChartBase);
     return chart;
-  }
+  };
 
   //------------------------------------------------------------
 
