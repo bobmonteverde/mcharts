@@ -1,6 +1,5 @@
 
 mc.models.barGrouped = function barGrouped(model) {
-
   model = model || {};
 
   //============================================================
@@ -22,7 +21,7 @@ mc.models.barGrouped = function barGrouped(model) {
   model.layers.groups
     .on('merge:transition', function(model, instance) {
       return this
-        .attr('transform', (d,i) => `translate(${i * instance.x2.rangeBand()},0)` );
+        .attr('transform', (d, i) => `translate(${i * instance.x2.rangeBand()},0)` );
     });
 
   model.layers.bars
@@ -35,36 +34,6 @@ mc.models.barGrouped = function barGrouped(model) {
   //------------------------------------------------------------
 
 
-
-  chart.calc = function(instance, data) {
-
-    model.barChart.calc.call(this, instance, data);
-
-    //TODO: see if I can use dimensions in chartBase for this (maybe override domain)
-    instance.x2 = d3.scale.ordinal()
-      .domain(model.series_(data).map(model.seriesKey_))
-      .rangeRoundBands([0, instance.x.rangeBand()]);
-
-
-    this.__chart__.chart  = chart;
-    this.__chart__.update = () => instance.container.call(chart);
-
-
-    return chart;
-  };
-
-
-
-  chart.build = function(instance, data) {
-
-    model.barChart.build.call(this, instance, data);
-
-
-    return chart;
-  };
-
-
-
   function chart(selection, instance) {
     selection.each(function(data) {
       instance = instance || {};
@@ -75,6 +44,28 @@ mc.models.barGrouped = function barGrouped(model) {
 
     return chart;
   }
+
+
+  chart.calc = function(instance, data) {
+    model.barChart.calc.call(this, instance, data);
+
+    //TODO: see if I can use dimensions in chartBase for this (maybe override domain)
+    instance.x2 = d3.scale.ordinal()
+      .domain(model.series_(data).map(model.seriesKey_))
+      .rangeRoundBands([0, instance.x.rangeBand()]);
+
+    this.__chart__.chart  = chart;
+    this.__chart__.update = () => instance.container.call(chart);
+
+    return chart;
+  };
+
+
+  chart.build = function(instance, data) {
+    model.barChart.build.call(this, instance, data);
+
+    return chart;
+  };
 
 
   //============================================================

@@ -1,6 +1,5 @@
 
 mc.models.bar = function bar(model) {
-
   model = model || {};
 
   //============================================================
@@ -35,12 +34,12 @@ mc.models.bar = function bar(model) {
     events: {
       'merge': function(model, instance) {
         return this
-          .attr('class', function(d,i) { return 'mc-group mc-group-' + i })
-          .classed('mc-disabled', function(d) { return d.disabled });
+          .attr('class', function(d, i) { return 'mc-group mc-group-' + i; })
+          .classed('mc-disabled', function(d) { return d.disabled; });
       },
       'merge:transition': function(model, instance) {
         return this
-          .attr('transform', function(d,i) { return 'translate(0,0)' });
+          .attr('transform', function(d, i) { return 'translate(0,0)'; });
       },
       'exit': function(model, instance) {
         return this
@@ -73,10 +72,10 @@ mc.models.bar = function bar(model) {
           .attr('y', instance.y0Calc)
           //TODO: investigate implementation of model.y_ and instance.y... scales MAY be shared between instances, BUT calculated for each instance when generating chart
           //      **this might be OK, tho might not.  Need to test more on chart model's with multiple instances (ie. selection of more than 1 element with same model but different data)
-          .attr('y', function(d) { return model.y_.apply(this, arguments) > 0 ? instance.y0Calc.apply(this, arguments) : instance.y0(0) })
+          .attr('y', function(d) { return model.y_.apply(this, arguments) > 0 ? instance.y0Calc.apply(this, arguments) : instance.y0(0); })
           .attr('width', instance.x.rangeBand())
           .attr('height', function() {
-            return Math.abs(instance.y0Calc.apply(this, arguments) - instance.y0(0))
+            return Math.abs(instance.y0Calc.apply(this, arguments) - instance.y0(0));
           });
       },
       'merge': function(model, instance) {
@@ -86,10 +85,10 @@ mc.models.bar = function bar(model) {
       'merge:transition': function(model, instance) {
         return this
           .attr('x', instance.xCalc)
-          .attr('y', function(d) { return model.y_.apply(this, arguments) > 0 ? instance.yCalc.apply(this, arguments) : instance.y(0) })
+          .attr('y', function(d) { return model.y_.apply(this, arguments) > 0 ? instance.yCalc.apply(this, arguments) : instance.y(0); })
           .attr('width', instance.x.rangeBand())
           .attr('height', function() {
-            return Math.abs(instance.yCalc.apply(this, arguments) - instance.y(0))
+            return Math.abs(instance.yCalc.apply(this, arguments) - instance.y(0));
           });
       },
       'exit': function(model, instance) {
@@ -108,6 +107,17 @@ mc.models.bar = function bar(model) {
   //------------------------------------------------------------
 
 
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
+
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
 
   chart.calc = function(instance, data) {
 
@@ -125,7 +135,6 @@ mc.models.bar = function bar(model) {
 
     return chart;
   };
-
 
 
   chart.build = function(instance, data) {
@@ -155,19 +164,6 @@ mc.models.bar = function bar(model) {
   };
 
 
-
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
-
-
   //============================================================
   // Expose Public API
 
@@ -177,7 +173,7 @@ mc.models.bar = function bar(model) {
   chart.rebind = function() {
     mc.rebind(chart, model.xyChartBase);
     return chart;
-  }
+  };
 
   //------------------------------------------------------------
 
