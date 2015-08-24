@@ -77,33 +77,35 @@ Layer.prototype.draw = function(base, model, instance, data) {
   ];
 
 
-
   for (let i in events) {
-    let event = events[i];
-    let selection = event.selection;
+    if ({}.hasOwnProperty.call(events, i)) {
+      let event = events[i];
+      let selection = event.selection;
 
-    if (typeof event.method === 'function')
-      selection = event.method.call(selection);
+      if (typeof event.method === 'function')
+        selection = event.method.call(selection);
 
-    if (!selection.empty()) {
+      if (!selection.empty()) {
+        // TODO: Decide if handlers need both 'model' and 'instance' objects passed in
 
-      // TODO: Decide if handlers need both 'model' and 'instance' objects passed in
+        let handlers = this._handlers[event.name];
 
-      let handlers = this._handlers[event.name];
-
-      if (handlers && handlers.length) {
-        for (let j in handlers) {
-          handlers[j].callback.call(selection, model, instance);
+        if (handlers && handlers.length) {
+          for (let j in handlers) {
+            if ({}.hasOwnProperty.call(handlers, j))
+              handlers[j].callback.call(selection, model, instance);
+          }
         }
-      }
 
 
-      handlers = this._handlers[event.name + ':transition'];
+        handlers = this._handlers[event.name + ':transition'];
 
-      if (handlers && handlers.length) {
-        selection = selection.transition();
-        for (let j in handlers) {
-          handlers[j].callback.call(selection, model, instance);
+        if (handlers && handlers.length) {
+          selection = selection.transition();
+          for (let j in handlers) {
+            if ({}.hasOwnProperty.call(handlers, j))
+              handlers[j].callback.call(selection, model, instance);
+          }
         }
       }
     }
@@ -111,7 +113,6 @@ Layer.prototype.draw = function(base, model, instance, data) {
 
   return bound; // bound is returned to allow stacking layers
 };
-
 
 
 // TODO: Consider making a way to generate a layer without a base defined initially
@@ -126,7 +127,8 @@ d3.selection.prototype.mlayer = function(options) {
 
   if ('events' in options) {
     for (let eventName in options.events) {
-      layer.on(eventName, options.events[eventName]);
+      if ({}.hasOwnProperty.call(options.events, eventName))
+        layer.on(eventName, options.events[eventName]);
     }
   }
 
@@ -153,10 +155,10 @@ if (mc)
 
     if ('events' in options) {
       for (let eventName in options.events) {
-        layer.on(eventName, options.events[eventName]);
+        if ({}.hasOwnProperty.call(options.events, eventName))
+          layer.on(eventName, options.events[eventName]);
       }
     }
 
     return layer;
   };
-

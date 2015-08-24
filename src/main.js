@@ -23,7 +23,6 @@ mc.dispatch = d3.dispatch('render_start', 'render_end');
 // mc.tooltip = tooltip;
 
 
-
 // ===========================================================
 // d3 prototypes
 
@@ -49,8 +48,11 @@ mc.log = (function logWrapper(showAlert, custom, disable) {
                showAlert && alert && () => {
                  let args = Array.prototype.slice.call(arguments);
                  let m;
-                 try { m = args.map(elem => JSON.stringify(elem)).join(', '); }
-                 catch(err) { m = args; }
+                 try {
+                   m = args.map(elem => JSON.stringify(elem)).join(', ');
+                 } catch(err) {
+                   m = args;
+                 }
                  window.alert(m);
                };
   let ret = log;
@@ -68,7 +70,7 @@ mc.log = (function logWrapper(showAlert, custom, disable) {
   };
 
   function log() {
-    if (disable) return;
+    if (disable) return false;
     let args = Array.prototype.slice.call(arguments);
     logs.push(args);
     if (logger) logger(args);
@@ -80,7 +82,6 @@ mc.log = (function logWrapper(showAlert, custom, disable) {
 })();
 
 // -----------------------------------------------------------
-
 
 
 // ===========================================================
@@ -183,11 +184,10 @@ mc.expose = function(name, obj, fn) {
 // Simple shallow copy of objects
 // TODO: decide if this should be in mc.utils
 mc.extend = function(obj) {
-  let i = arguments.length;
-
-  while (i -= 1) {
+  for (let i = arguments.length; i > 0; i--) {
     for (let prop in arguments[i]) {
-      obj[prop] = arguments[i][prop];
+      if ({}.hasOwnProperty.call(arguments[i], prop))
+        obj[prop] = arguments[i][prop];
     }
   }
 

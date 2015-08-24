@@ -33,7 +33,7 @@
      * ES6
      */
     'no-var': 2,                     // http://eslint.org/docs/rules/no-var
-    'prefer-const': 2,               // http://eslint.org/docs/rules/prefer-const
+    'prefer-const': 0,               // http://eslint.org/docs/rules/prefer-const
 
     /**
      * Variables
@@ -54,7 +54,7 @@
     'no-cond-assign': [2, 'always'], // http://eslint.org/docs/rules/no-cond-assign
     'no-console': 1,                 // http://eslint.org/docs/rules/no-console
     'no-debugger': 1,                // http://eslint.org/docs/rules/no-debugger
-    'no-alert': 1,                   // http://eslint.org/docs/rules/no-alert
+    'no-alert': 0,                   // http://eslint.org/docs/rules/no-alert
     'no-constant-condition': 1,      // http://eslint.org/docs/rules/no-constant-condition
     'no-dupe-keys': 2,               // http://eslint.org/docs/rules/no-dupe-keys
     'no-duplicate-case': 2,          // http://eslint.org/docs/rules/no-duplicate-case
@@ -76,7 +76,7 @@
      * Best practices
      */
     'consistent-return': 2,          // http://eslint.org/docs/rules/consistent-return
-    'curly': [2, 'multi-line'],      // http://eslint.org/docs/rules/curly
+    'curly': [1, 'multi'],           // http://eslint.org/docs/rules/curly
     'default-case': 2,               // http://eslint.org/docs/rules/default-case
     'dot-notation': [2, {            // http://eslint.org/docs/rules/dot-notation
       'allowKeywords': true
@@ -137,7 +137,7 @@
     }],
     'comma-style': [2, 'last'],      // http://eslint.org/docs/rules/comma-style
     'eol-last': 2,                   // http://eslint.org/docs/rules/eol-last
-    'func-names': 1,                 // http://eslint.org/docs/rules/func-names
+    'func-names': 0,                 // http://eslint.org/docs/rules/func-names
     'key-spacing': [2, {             // http://eslint.org/docs/rules/key-spacing
       'beforeColon': false,
       'afterColon': true
@@ -145,7 +145,7 @@
     'new-cap': [2, {                 // http://eslint.org/docs/rules/new-cap
       'newIsCap': true
     }],
-    'no-multiple-empty-lines': [2, { // http://eslint.org/docs/rules/no-multiple-empty-lines
+    'no-multiple-empty-lines': [1, { // http://eslint.org/docs/rules/no-multiple-empty-lines
       'max': 2
     }],
     'no-nested-ternary': 2,          // http://eslint.org/docs/rules/no-nested-ternary
