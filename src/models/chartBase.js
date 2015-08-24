@@ -37,7 +37,6 @@
 
 
 mc.models.chartBase = function chartBase(model) {
-
   model = model || {};
 
   //============================================================
@@ -50,15 +49,15 @@ mc.models.chartBase = function chartBase(model) {
 
   // Accessors
   //model.width_      = function(container, data) { return parseInt(container.style('width')) }; // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
-  model.width_      = (container, data) => parseInt(container.style('width')) // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
-  model.height_     = (container, data) => parseInt(container.style('height'))
-  model.label_      = (series, j) => series.key
+  model.width_      = (container, data) => parseInt(container.style('width'), 10); // could also do container.attr('width') //TODO: test if both ALWAYS work or if one is more consistent than other
+  model.height_     = (container, data) => parseInt(container.style('height'), 10);
+  model.label_      = (series, j) => series.key;
   //model.series_     = function(data) { return data.filter(function(d) { return !d.disabled }) }; //TODO: need to handle disabled differently
-  model.series_     = (data) => data //TODO: think about best way to handle disabled if not here
-  model.values_     = (series, i) => series.values
-  model.seriesKey_  = (series, i) => series.key || i
-  model.pointKey_   = (point, i, j) => i
-  model.id_         = () => Math.round(Math.random() * 899999) + 100000
+  model.series_     = (data) => data; //TODO: think about best way to handle disabled if not here
+  model.values_     = (series, i) => series.values;
+  model.seriesKey_  = (series, i) => series.key || i;
+  model.pointKey_   = (point, i, j) => i;
+  model.id_         = () => Math.round(Math.random() * 899999) + 100000;
 
 
   //TODO: consider moving dimensioos into it's own file for re-use outside of SVG world
@@ -73,14 +72,25 @@ mc.models.chartBase = function chartBase(model) {
   //------------------------------------------------------------
 
 
-  chart.calc = function(instance, data) {
+  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
 
-    var that = this
-      , flatData
-      ;
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
+
+  chart.calc = function(instance, data) {
+    let that = this;
+    let flatData;
 
     instance.container = d3.select(this);
-    instance.width     = model.width_ (instance.container, data) - model.margin.left - model.margin.right;
+    instance.width     = model.width_(instance.container, data)  - model.margin.left - model.margin.right;
     instance.height    = model.height_(instance.container, data) - model.margin.top  - model.margin.bottom;
 
 
@@ -93,7 +103,7 @@ mc.models.chartBase = function chartBase(model) {
           .filter(d => !d.disabled)
           .map((series, j) => {
             return model.values_(series, j).map((d, i) => {
-              var obj  = {};
+              let obj  = {};
 
               model.dimensions.forEach(dim => {
                 if (model[dim.key + 'Disable']) return;
@@ -113,7 +123,7 @@ mc.models.chartBase = function chartBase(model) {
         if (model[dim.key + 'Scale'].rangeBands) {
           // Ordinal Scale
           model[dim.key + 'Scale']
-            .domain(dim.domain && dim.domain(model,instance) ||
+            .domain(dim.domain && dim.domain(model,   instance) ||
                     typeof dim.force !== 'undefined' ?
                       flatData.map(d => d[dim.key] ).concat(dim.force)
                     : flatData.map(d => d[dim.key] )
@@ -121,7 +131,7 @@ mc.models.chartBase = function chartBase(model) {
         } else {
           // Quantitative Scale
           model[dim.key + 'Scale']
-            .domain(dim.domain && dim.domain(model,instance) ||
+            .domain(dim.domain && dim.domain(model, instance) ||
                     typeof dim.force !== 'undefined' ?
                       d3.extent(d3.extent(flatData, d => d[dim.key] ).concat(dim.force))
                     : d3.extent(flatData, d => d[dim.key] )
@@ -132,28 +142,28 @@ mc.models.chartBase = function chartBase(model) {
         // Usually for Quantitative scales
         if (dim.range)
           model[dim.key + 'Scale']
-            .range(dim.range(model,instance));
+            .range(dim.range(model, instance));
 
         // For Ordinal scales (all 3 below)
         if (dim.rangePoints)
           model[dim.key + 'Scale']
             .rangePoints.apply(
               model[dim.key + 'Scale'],
-              dim.rangePoints(model,instance)
+              dim.rangePoints(model, instance)
             );
 
         if (dim.rangeBands)
           model[dim.key + 'Scale']
             .rangeBands.apply(
               model[dim.key + 'Scale'],
-              dim.rangeBands(model,instance)
+              dim.rangeBands(model, instance)
             );
 
         if (dim.rangeRoundBands)
           model[dim.key + 'Scale']
             .rangeRoundBands.apply(
               model[dim.key + 'Scale'],
-              dim.rangeRoundBands(model,instance)
+              dim.rangeRoundBands(model, instance)
             );
       });
     }
@@ -163,11 +173,11 @@ mc.models.chartBase = function chartBase(model) {
     this.__chart__ = this.__chart__ || {};
 
     model.dimensions.forEach(dim => {
-      instance[dim.key]     = model[dim.key + 'Scale'].copy();
-      instance[dim.key+'0'] = that.__chart__[dim.key] || instance[dim.key];
+      instance[dim.key]       = model[dim.key + 'Scale'].copy();
+      instance[dim.key + '0'] = that.__chart__[dim.key] || instance[dim.key];
 
-      instance[dim.key+'Calc']   =   function() { return instance[dim.key]  (model[dim.key+'_'].apply(this, arguments)) || 0 }; //TODO: figure out why || 0 is needed to prevent error
-      instance[dim.key+'0'+'Calc'] = function() { return instance[dim.key+0](model[dim.key+'_'].apply(this, arguments)) || 0 };
+      instance[dim.key + 'Calc']       = function() { return instance[dim.key](model[dim.key + '_'].apply(this, arguments)) || 0; }; //TODO: figure out why || 0 is needed to prevent error
+      instance[dim.key + '0' + 'Calc'] = function() { return instance[dim.key + 0](model[dim.key + '_'].apply(this, arguments)) || 0; };
     });
 
     //------------------------------------------------------------
@@ -176,16 +186,14 @@ mc.models.chartBase = function chartBase(model) {
     // (used for getting the scale from the last time the chart was called)
     model.dimensions.forEach(dim => {
       that.__chart__[dim.key] = instance[dim.key];
-    })
+    });
 
 
     return chart;
   };
 
 
-
   chart.build = function(instance, data) {
-
     //------------------------------------------------------------
     // Setup Chart Layers
 
@@ -198,19 +206,6 @@ mc.models.chartBase = function chartBase(model) {
   };
 
 
-  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
-
-
   //============================================================
   // Expose Public API
 
@@ -221,8 +216,8 @@ mc.models.chartBase = function chartBase(model) {
   };
 
   chart.id = function(_) {
-    if (!arguments.length) return id_;
-    id_ = d3.functor(_);
+    if (!arguments.length) return model.id_;
+    model.id_ = d3.functor(_);
     return chart;
   };
 
@@ -298,7 +293,7 @@ mc.models.chartBase = function chartBase(model) {
     };
 
     // build model.dimension_ and chart.dimension_
-    model[dim.key + '_'] = dim.accessor || function(d) { return d[dim.key] };
+    model[dim.key + '_'] = dim.accessor || (d => d[dim.key]);
     chart[dim.key] = function(_) {
       if (!arguments.length) return model[dim.key + '_'];
       model[dim.key + '_'] = d3.functor(_);
