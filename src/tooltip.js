@@ -1,4 +1,3 @@
-
 /* ****
  * Basic Tooltips
  *   no outside dependencies
@@ -212,7 +211,6 @@
   mctooltip.cleanup = function() {
     let tooltips = document.getElementsByClassName('mc-tooltip');
     let purging  = [];
-    let removeMe;
 
     for (let i = 0; i < tooltips.length; i++) {
       purging.push(tooltips[i]);
@@ -223,10 +221,11 @@
     }
 
     setTimeout(function() {
+      let removeMe;
+
       while (removeMe = purging.pop()) {
         removeMe.parentNode.removeChild(removeMe);
       }
     }, removeDelay);
   };
-
 })(window, document, mc);

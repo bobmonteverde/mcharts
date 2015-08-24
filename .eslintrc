@@ -156,7 +156,7 @@
     'no-underscore-dangle': 0,       // http://eslint.org/docs/rules/no-underscore-dangle
     'one-var': [2, 'never'],         // http://eslint.org/docs/rules/one-var
     'padded-blocks': [2, 'never'],   // http://eslint.org/docs/rules/padded-blocks
-    'semi': [2, 'always'],           // http://eslint.org/docs/rules/semi
+    'semi': [1, 'always'],           // http://eslint.org/docs/rules/semi
     'semi-spacing': [2, {            // http://eslint.org/docs/rules/semi-spacing
       'before': false,
       'after': true
@@ -166,7 +166,7 @@
     'space-before-function-paren': [2, 'never'], // http://eslint.org/docs/rules/space-before-function-paren
     'space-infix-ops': 2,            // http://eslint.org/docs/rules/space-infix-ops
     'space-return-throw-case': 2,    // http://eslint.org/docs/rules/space-return-throw-case
-    'spaced-comment': [2, 'always',  {// http://eslint.org/docs/rules/spaced-comment
+    'spaced-comment': [0, 'always',  {// http://eslint.org/docs/rules/spaced-comment
       'exceptions': ['-', '+'],
       'markers': ['=', '!']           // space here to support sprockets directives
     }],

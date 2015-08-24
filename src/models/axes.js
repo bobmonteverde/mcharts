@@ -2,50 +2,60 @@
 // TODO: consider having slightly different structure for chart components vs charts
 //       **probably a bad idea... but worth a thought.  Now have 'layers' for easy tweaking of components
 mc.models.axes = function axes(model) {
-
-  model = model || {}
+  model = model || {};
 
   //============================================================
   // Public Variables with Default Settings
   //------------------------------------------------------------
 
-  model.renderBottom    = true
-  model.renderTop       = false
-  model.renderLeft      = true
-  model.renderRight     = false
+  model.renderBottom    = true;
+  model.renderTop       = false;
+  model.renderLeft      = true;
+  model.renderRight     = false;
 
-  //scales must be passed into axes component, top/bottom defaults to xScale, left/right defaults to yScale
-  //model.bottom
-  //model.top
-  //model.left
-  //model.right
+  // scales must be passed into axes component, top/bottom defaults to xScale, left/right defaults to yScale
+  // model.bottom
+  // model.top
+  // model.left
+  // model.right
 
   // Components
-  model.bottomAxis      = d3.svg.axis()
-  model.topAxis         = d3.svg.axis()
-  model.leftAxis        = d3.svg.axis()
-  model.rightAxis       = d3.svg.axis()
+  model.bottomAxis      = d3.svg.axis();
+  model.topAxis         = d3.svg.axis();
+  model.leftAxis        = d3.svg.axis();
+  model.rightAxis       = d3.svg.axis();
 
   // Accessors
-  model.bottomLabel_    = d => d.xLabel || ''
-  model.topLabel_       = d => d.xLabel || ''
-  model.leftLabel_      = d => d.yLabel || ''
-  model.rightLabel_     = d => d.yLabel || ''
+  model.bottomLabel_    = d => d.xLabel || '';
+  model.topLabel_       = d => d.xLabel || '';
+  model.leftLabel_      = d => d.yLabel || '';
+  model.rightLabel_     = d => d.yLabel || '';
 
-  model.bottomTickSize_ = height => [-height, 1]
-  model.topTickSize_    = height => [-height, 1]
-  model.leftTickSize_   = width => [-width, 1]
-  model.rightTickSize_  = width => [-width, 1]
+  model.bottomTickSize_ = height => [-height, 1];
+  model.topTickSize_    = height => [-height, 1];
+  model.leftTickSize_   = width => [-width, 1];
+  model.rightTickSize_  = width => [-width, 1];
 
-  model.bottomTicks_    = width => [Math.round(width/80)]
-  model.topTicks_       = width => [Math.round(width/80)]
-  model.leftTicks_      = height => [Math.round(height/40)]
-  model.rightTicks_     = height => [Math.round(height/40)]
+  model.bottomTicks_    = width => [Math.round(width / 80)];
+  model.topTicks_       = width => [Math.round(width / 80)];
+  model.leftTicks_      = height => [Math.round(height / 40)];
+  model.rightTicks_     = height => [Math.round(height / 40)];
 
   //TODO: make Label alignment an option
 
   //------------------------------------------------------------
 
+
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
+
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
 
 
   chart.calc = function(instance, data) {
@@ -56,7 +66,6 @@ mc.models.axes = function axes(model) {
 
 
   chart.build = function(instance, data) {
-
     //TODO: FIGURE OUT WHAT SHOULD BE ON INSTANCE
 
     //TODO: Consider using a layer for each axis
@@ -64,11 +73,10 @@ mc.models.axes = function axes(model) {
 
     //TODO: assume all charts using axes model have inherited chartBase
 
-    var container = d3.select(this);
+    let container = d3.select(this);
 
     // Elements
     //TODO: axes wrap, etc. are likelt separate from parent chart's wrap/g so either don't store on 'instance' or use unique name //TODO: investigate, might be able to actuallly use paren;t wrap/g
-    var wrap, wrapEnter, g, gEnter;
 
 
     // Assume scales are setup by parent model
@@ -77,10 +85,10 @@ mc.models.axes = function axes(model) {
     // Setup Chart Layers
 
     //TODO: consider using only wrap/wrapEnter, no g/gEnter
-    wrap      = container.selectAll('g.mc-axes').data([data]);
-    wrapEnter = wrap.enter().append('g').attr('class', 'mc-axes');
-    gEnter    = wrapEnter.append('g');
-    g         = wrap.select('g');
+    let wrap      = container.selectAll('g.mc-axes').data([data]);
+    let wrapEnter = wrap.enter().append('g').attr('class', 'mc-axes');
+    let gEnter    = wrapEnter.append('g');
+    let g         = wrap.select('g');
 
     gEnter.append('g').attr('class', 'mc-axis mc-bottomAxis');
     gEnter.append('g').attr('class', 'mc-axis mc-topAxis');
@@ -114,7 +122,7 @@ mc.models.axes = function axes(model) {
           ;
       g.select('.mc-bottomAxis .label')
           .attr('x', instance.width)
-          .text(model.bottomLabel_);
+          .text(model.bottomLabel_)
           ;
       g.select('.mc-bottomAxis .x.axis')
           .attr('transform', 'translate(0,' + instance.height + ')')
@@ -149,7 +157,7 @@ mc.models.axes = function axes(model) {
           ;
       g.select('.mc-topAxis .label')
           .attr('x', instance.width)
-          .text(model.topLabel_);
+          .text(model.topLabel_)
           ;
       g.select('.mc-topAxis .x.axis')
           //.attr('transform', 'translate(0,0)')
@@ -230,19 +238,6 @@ mc.models.axes = function axes(model) {
 
     return chart;
   };
-
-
-
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
 
 
   //============================================================
