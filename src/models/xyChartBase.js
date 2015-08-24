@@ -1,6 +1,5 @@
 
 mc.models.xyChartBase = function xyChartBase(model) {
-
   model = model || {};
 
   //============================================================
@@ -21,18 +20,27 @@ mc.models.xyChartBase = function xyChartBase(model) {
   //------------------------------------------------------------
 
 
+  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
+  function chart(selection, instance) {
+    selection.each(function(data) {
+      instance = instance || {};
+
+      chart.calc.call(this, instance, data);
+      chart.build.call(this, instance, data);
+    });
+
+    return chart;
+  }
+
 
   chart.calc = function(instance, data) {
-
     model.xyBase.calc.call(this, instance, data);
 
     return chart;
   };
 
 
-
   chart.build = function(instance, data) {
-
     model.xyBase.build.call(this, instance, data); // This currently DOES NOTHING, but here incase someting is added
 
     //------------------------------------------------------------
@@ -47,6 +55,16 @@ mc.models.xyChartBase = function xyChartBase(model) {
 
     //------------------------------------------------------------
     // Core Chart Code
+
+    function toggleDisabled(d) {
+      d.series.disabled = !d.series.disabled;
+
+      //TODO: maybe haave the parent chart update itself?
+      //TODO: consider dispatching event toggleDisable
+      //TODO: **consider making a dispatch that multiple inherited charts can share
+      instance.container.chart().update();
+    }
+
 
     if (model.renderAxes) {
       instance.axesWrap = instance.g.select('.mc-axes-wrap');
@@ -63,7 +81,7 @@ mc.models.xyChartBase = function xyChartBase(model) {
       //TODO: legend width and height are not able to be set in parent charts
       model.legend
         .width(instance.width)
-        .height(20)
+        .height(20);
 
       model.legend(instance.legendWrap);
 
@@ -71,32 +89,10 @@ mc.models.xyChartBase = function xyChartBase(model) {
       instance.legendWrap.chart().dispatch.on('click.toggleDisabled', toggleDisabled);
     }
 
-    function toggleDisabled(d) {
-      d.series.disabled = !d.series.disabled;
-
-      //TODO: maybe haave the parent chart update itself?
-      //TODO: consider dispatching event toggleDisable
-      //TODO: **consider making a dispatch that multiple inherited charts can share
-      instance.container.chart().update();
-    }
-
     //------------------------------------------------------------
 
     return chart;
   };
-
-
-  //TODO: this appears to be identical in all charts, should see if there is a way to automate this
-  function chart(selection, instance) {
-    selection.each(function(data) {
-      instance = instance || {};
-
-      chart.calc.call(this, instance, data);
-      chart.build.call(this, instance, data);
-    });
-
-    return chart;
-  }
 
 
   //============================================================
